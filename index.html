@@ -1,0 +1,823 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#1d5e3b">
+<title>متابعة تكاليف الطلاب</title>
+<style>
+  :root{
+    --g:#1d5e3b; --g2:#226a43; --gl:#e6eee8; --bg:#f3f4f2; --card:#fff; --line:#e1e5e1;
+    --tx:#1f2421; --mu:#5d6961; --ok:#1c7442; --okbg:#e2f2e7; --warn:#8a5a00; --warnbg:#fff3d4;
+    --red:#b42318; --redbg:#fdecea; --r:18px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--tx);
+    font:16px/1.7 system-ui,-apple-system,"Segoe UI",Tahoma,"Noto Sans Arabic",Arial,sans-serif}
+  [hidden]{display:none !important}
+  .wrap{max-width:880px;margin:0 auto;padding:0 16px}
+
+  .top{background:var(--g);color:#fff;padding:22px 0 18px}
+  .top-in{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+  .top h1{margin:0;font-size:1.6rem;line-height:1.4}
+  .top .sub{margin:6px 0 0;opacity:.85;font-size:.95rem}
+  .top .btn{background:rgba(255,255,255,.15);flex-shrink:0}
+
+  .netbar{background:var(--red);color:#fff;text-align:center;padding:8px 16px;font-weight:600;font-size:.95rem}
+  main{padding-top:16px;padding-bottom:28px}
+  footer{color:var(--mu);font-size:.85rem;text-align:center;padding:0 16px 28px}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin-bottom:14px}
+  .card h2{margin:0 0 12px;font-size:1.35rem}
+  .muted{color:var(--mu)}
+  .center{text-align:center}
+  .small{font-size:.88rem}
+
+  .btn{font:inherit;font-weight:600;border:0;border-radius:12px;padding:9px 18px;min-height:44px;
+    background:var(--g2);color:#fff;cursor:pointer}
+  .btn.secondary{background:var(--gl);color:var(--tx)}
+  .btn.danger{background:var(--red)}
+  .btn.text-danger{background:none;color:var(--red);padding:8px 6px}
+  .btn:disabled{opacity:.55;cursor:not-allowed}
+  .btn:focus-visible,.chk input:focus-visible,.stu-toggle:focus-visible{outline:3px solid #8cc5a1;outline-offset:2px}
+
+  label.field{display:block;margin-bottom:12px}
+  label.field span{display:block;color:var(--mu);font-size:.92rem;margin-bottom:4px}
+  input[type=text],input[type=email],input[type=password],input[type=search],textarea{
+    font:inherit;color:inherit;width:100%;padding:9px 14px;min-height:46px;
+    border:1px solid #cdd4ce;border-radius:12px;background:#fff}
+  textarea{min-height:120px;resize:vertical}
+  input:focus,textarea:focus{outline:none;border-color:var(--g2);box-shadow:0 0 0 3px #d5e8dc}
+  .row{display:flex;gap:8px;align-items:stretch}
+  .row > input{flex:1;min-width:0}
+  .msg{margin:10px 0 0;font-size:.93rem;min-height:1.2em}
+  .msg.err{color:var(--red)}
+  .alert{background:var(--redbg);color:var(--red);border-radius:12px;padding:12px 14px;margin-bottom:14px}
+  .alert .btn{margin-top:8px}
+  details.more{margin-top:12px}
+  details.more summary{cursor:pointer;color:var(--g2);font-weight:600}
+  details.more[open] summary{margin-bottom:8px}
+  ol.steps{padding-inline-start:22px;margin:10px 0}
+  pre.rules{direction:ltr;text-align:left;background:#f6f7f6;border:1px solid var(--line);border-radius:12px;
+    padding:12px;overflow:auto;font-size:.8rem;line-height:1.5}
+
+  .groups{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .btn.big{min-height:72px;font-size:1.2rem;border-radius:16px}
+  .tabs{display:flex;gap:8px;margin-bottom:14px}
+  .tab{flex:1;font:inherit;font-weight:700;border:1px solid var(--line);background:var(--card);color:var(--tx);
+    border-radius:14px;padding:10px;min-height:48px;cursor:pointer}
+  .tab.active{background:var(--g);border-color:var(--g);color:#fff}
+
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px}
+  .stat b{display:block;font-size:1.6rem;line-height:1.3;color:var(--g)}
+  .stat span{color:var(--mu);font-size:.88rem}
+
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .toolbar input{flex:1 1 220px}
+  .filters{display:flex;gap:8px}
+  .filters .btn{background:var(--card);color:var(--tx);border:1px solid var(--line);font-weight:600}
+  .filters .btn.on{background:var(--g2);color:#fff;border-color:var(--g2)}
+  .hint{background:var(--warnbg);color:var(--warn);border-radius:12px;padding:10px 14px;margin-bottom:12px}
+
+  .stu{background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:10px;overflow:hidden}
+  .stu.ok{border-color:#b9dcc5}
+  .stu-toggle{display:block;width:100%;text-align:inherit;font:inherit;color:inherit;background:none;border:0;
+    padding:14px 16px;cursor:pointer}
+  .stu-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+  .stu-name{font-weight:700;font-size:1.08rem;overflow-wrap:anywhere}
+  .badge{flex-shrink:0;font-size:.82rem;font-weight:700;border-radius:999px;padding:2px 12px;white-space:nowrap}
+  .badge.ok{background:var(--okbg);color:var(--ok)}
+  .badge.warn{background:var(--warnbg);color:var(--warn)}
+  .badge.none{background:#eef0ee;color:var(--mu)}
+  .bar{height:8px;background:#e9ece9;border-radius:99px;margin:10px 0 6px;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--g2);border-radius:99px}
+  .nums{display:flex;flex-wrap:wrap;gap:4px 16px;color:var(--mu);font-size:.92rem}
+  .nums b{color:var(--tx)}
+  .chev{color:var(--g2);font-size:.88rem;font-weight:600;margin-top:4px}
+  .stu-body{border-top:1px solid var(--line);padding:6px 16px 10px}
+  .checks{list-style:none;margin:0;padding:0}
+  .chk{display:flex;align-items:center;gap:12px;min-height:50px;padding:4px 0;cursor:pointer;border-bottom:1px dashed var(--line)}
+  .checks li:last-child .chk{border-bottom:0}
+  .chk input{width:28px;height:28px;flex-shrink:0;accent-color:var(--g2);cursor:pointer;margin:0}
+  .chk input:disabled{cursor:wait}
+  .chk span{overflow-wrap:anywhere}
+  .chk em{font-style:normal;color:var(--mu);font-size:.82rem;margin-inline-start:auto;white-space:nowrap}
+  .stu-actions{display:flex;justify-content:flex-end;margin-top:6px}
+  .empty{text-align:center;color:var(--mu);padding:28px 12px}
+
+  .arow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
+  .arow:last-child{border-bottom:0}
+  .arow .t{font-weight:700;overflow-wrap:anywhere}
+  .arow small{display:block;color:var(--mu)}
+  .arow .btns{display:flex;gap:6px;flex-shrink:0}
+
+  #toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:30;max-width:calc(100% - 32px);
+    background:#24302a;color:#fff;border-radius:12px;padding:10px 18px;font-weight:600;box-shadow:0 6px 20px rgba(0,0,0,.18)}
+  #toast.err{background:var(--red)}
+  #toast.warn{background:#7a5200}
+
+  .modal{position:fixed;inset:0;background:rgba(20,28,23,.45);display:flex;align-items:center;justify-content:center;padding:16px;z-index:40}
+  .modal-box{background:#fff;border-radius:var(--r);padding:20px;width:100%;max-width:440px}
+  .modal-box h3{margin:0 0 8px;font-size:1.2rem}
+  .modal-box p{margin:0 0 14px;white-space:pre-line}
+  .modal-box input{margin-bottom:14px}
+  .modal-btns{display:flex;gap:8px}
+  .modal-btns .btn{flex:1}
+
+  @media (max-width:640px){
+    .top h1{font-size:1.35rem}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .stat b{font-size:1.4rem}
+    .filters{width:100%}
+    .filters .btn{flex:1;padding:9px 8px}
+    .arow{flex-wrap:wrap}
+    .arow .btns{width:100%;justify-content:flex-end}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <div>
+      <h1>متابعة تكاليف الطلاب</h1>
+      <p class="sub" id="subTitle">إدارة الطلاب والتكاليف ومتابعة التسليم من مكان واحد</p>
+    </div>
+    <button id="switchBtn" class="btn" type="button" hidden>تغيير القسم</button>
+  </div>
+</header>
+<div id="netBar" class="netbar" hidden>لا يوجد اتصال بالإنترنت — لن تُحفظ أي تغييرات حتى يعود الاتصال.</div>
+
+<main class="wrap">
+  <noscript><div class="alert">يجب تفعيل JavaScript لتشغيل الموقع.</div></noscript>
+  <p id="bootMsg" class="muted center">جارٍ التحميل…</p>
+
+  <!-- يظهر فقط إذا لم تُوضع إعدادات Firebase في الكود -->
+  <section id="setupView" class="card" hidden>
+    <h2>إعداد الاتصال بقاعدة البيانات</h2>
+    <p class="muted">ضع إعدادات مشروع Firebase مرة واحدة داخل الكود (في أعلى قسم البرمجة بهذا الملف)، ثم انشر الملف.
+      الدخول مفتوح بلا كلمة مرور، فشارك الرابط مع المشرفين فقط.</p>
+    <ol class="steps">
+      <li>أنشئ مشروعًا جديدًا في Firebase وأضف تطبيق Web.</li>
+      <li>أنشئ قاعدة Firestore، ثم ضع قيم firebaseConfig في موضعها داخل الكود.</li>
+      <li>انسخ قواعد Firestore من القسم أدناه، ثم اضغط نشر (Publish).</li>
+    </ol>
+    <details class="more">
+      <summary>قواعد Firestore المطلوبة</summary>
+      <pre class="rules" id="rulesText"></pre>
+    </details>
+  </section>
+
+  <section id="groupView" class="card" hidden>
+    <h2>اختر القسم</h2>
+    <p class="muted">لكل قسم طلابه وتكاليفه الخاصة.</p>
+    <div class="groups">
+      <button class="btn big" type="button" data-group="ashbal">دخول الأشبال</button>
+      <button class="btn big" type="button" data-group="fityan">دخول الفتيان</button>
+    </div>
+    <p id="groupMsg" class="msg err" role="alert"></p>
+  </section>
+
+  <section id="appView" hidden>
+    <nav class="tabs">
+      <button class="tab active" type="button" data-tab="students">الطلاب والمتابعة</button>
+      <button class="tab" type="button" data-tab="assignments" id="tabAssignBtn">إدارة التكاليف</button>
+    </nav>
+
+    <div id="loadErr" class="alert" hidden><div id="loadErrText"></div>
+      <button id="retryBtn" class="btn danger" type="button">إعادة المحاولة</button></div>
+    <p id="loading" class="muted center">جارٍ تحميل البيانات…</p>
+
+    <div id="studentsTab" hidden>
+      <div class="stats" id="stats"></div>
+
+      <div class="card">
+        <form id="addStudentForm" class="row" novalidate>
+          <input id="studentName" type="text" maxlength="120" placeholder="اسم الطالب الجديد" autocomplete="off" aria-label="اسم الطالب الجديد">
+          <button id="addStudentBtn" class="btn" type="submit">إضافة طالب</button>
+        </form>
+        <details class="more" id="bulkBox">
+          <summary>إضافة عدة طلاب دفعة واحدة</summary>
+          <textarea id="bulkNames" placeholder="اكتب كل اسم في سطر مستقل"></textarea>
+          <p class="muted small">الأسماء المكررة أو الموجودة مسبقًا تُتجاهل تلقائيًا.</p>
+          <button id="bulkBtn" class="btn" type="button">إضافة القائمة</button>
+        </details>
+      </div>
+
+      <div class="toolbar">
+        <input id="search" type="search" placeholder="ابحث عن طالب بالاسم" autocomplete="off" aria-label="بحث">
+        <div class="filters">
+          <button class="btn on" type="button" data-filter="all" id="fAll">الكل</button>
+          <button class="btn" type="button" data-filter="incomplete" id="fInc">غير المكتملين</button>
+        </div>
+      </div>
+      <div id="noAssignHint" class="hint" hidden>لا توجد تكاليف بعد — أضفها من «إدارة التكاليف»، وستظهر لكل الطلاب تلقائيًا.</div>
+      <div id="studentList"></div>
+    </div>
+
+    <div id="assignmentsTab" hidden>
+      <div class="card">
+        <h2>إضافة تكليف</h2>
+        <form id="addAssignForm" class="row" novalidate>
+          <input id="assignTitle" type="text" maxlength="120" autocomplete="off" aria-label="اسم التكليف">
+          <button id="addAssignBtn" class="btn" type="submit">إضافة</button>
+        </form>
+        <p class="muted small" style="margin:8px 0 0">يظهر التكليف الجديد لجميع الطلاب على أنه غير مسلَّم.</p>
+      </div>
+      <div class="card">
+        <h2>التكاليف الحالية</h2>
+        <div id="assignmentList"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>متابعة تكاليف الطلاب</footer>
+
+<div id="toast" role="status" aria-live="polite" hidden></div>
+
+<div id="modal" class="modal" hidden>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <h3 id="mTitle"></h3>
+    <p id="mText"></p>
+    <input id="mInput" type="text" maxlength="120" hidden>
+    <div class="modal-btns">
+      <button id="mOk" class="btn" type="button"></button>
+      <button id="mCancel" class="btn secondary" type="button">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+// ======================================================================
+//  إعدادات Firebase — انسخها من: إعدادات المشروع ← تطبيقاتك ← Web app
+//  (هذه القيم ليست سرية؛ الحماية الحقيقية في قواعد Firestore)
+// ======================================================================
+const firebaseConfig = {
+  apiKey: "AIzaSyCKwSe_YG3Kk5iseUjid0sbtSpm5eBRVZ4",
+  authDomain: "takalif-3e1d6.firebaseapp.com",
+  projectId: "takalif-3e1d6",
+  storageBucket: "takalif-3e1d6.firebasestorage.app",
+  messagingSenderId: "801151139400",
+  appId: "1:801151139400:web:54541ce985b5bf6506e27d"
+};
+// ======================================================================
+
+const SDK = "https://www.gstatic.com/firebasejs/10.12.2/";
+const configReady = ["apiKey", "authDomain", "projectId", "appId"]
+  .every(k => firebaseConfig[k] && !String(firebaseConfig[k]).includes("ضع_هنا"));
+
+const RULES = `rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // الدخول مفتوح بلا كلمة مرور، ومقصور على قسمي الأشبال والفتيان فقط
+    function okGroup(g) {
+      return g in ['ashbal', 'fityan'];
+    }
+    function validText(f) {
+      return request.resource.data[f] is string &&
+        request.resource.data[f].size() > 0 &&
+        request.resource.data[f].size() <= 120;
+    }
+    match /groups/{g}/students/{id} {
+      allow read, delete: if okGroup(g);
+      allow create, update: if okGroup(g) && validText('name');
+    }
+    match /groups/{g}/assignments/{id} {
+      allow read, delete: if okGroup(g);
+      allow create, update: if okGroup(g) && validText('title');
+    }
+    match /groups/{g}/submissions/{studentId} {
+      allow read, write: if okGroup(g);
+    }
+    // أي مسار آخر مرفوض تلقائيًا
+  }
+}`;
+
+const GROUPS = { ashbal: "الأشبال", fityan: "الفتيان" };
+const GROUP_KEY = "takaleef_group";
+
+// ---------- أدوات صغيرة ----------
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const cleanText = s => String(s || "").replace(/\s+/g, " ").trim().slice(0, 120);
+// توحيد الكتابة العربية للبحث ومقارنة التكرار
+const norm = s => cleanText(s).replace(/[ً-ْـ]/g, "")
+  .replace(/[أإآ]/g, "ا").replace(/ة/g, "ه").replace(/ى/g, "ي").toLowerCase();
+const byName = (a, b) => a.name.localeCompare(b.name, "ar");
+const pctText = p => p === null ? "—" : p + "%";
+
+let toastTimer;
+function toast(text, kind = "", ms = 2200) {
+  const t = $("#toast");
+  t.textContent = text; t.className = kind; t.hidden = false;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.hidden = true; }, ms);
+}
+
+function errMsg(e, fallback) {
+  const c = String(e && e.code || "");
+  if (c.includes("permission-denied")) return "لا توجد صلاحية لهذا الحساب. تأكد من إضافته في مجموعة admins.";
+  if (c.includes("unavailable") || c.includes("network")) return "تعذّر الاتصال بالخادم. تحقق من الإنترنت ثم أعد المحاولة.";
+  if (c.includes("resource-exhausted")) return "تم تجاوز حد الاستخدام اليومي في Firebase.";
+  return fallback;
+}
+
+// نافذة تأكيد / إدخال بسيطة
+function ask({ title, text = "", ok = "تأكيد", danger = false, value = null }) {
+  return new Promise(resolve => {
+    const modal = $("#modal"), inp = $("#mInput"), okB = $("#mOk"), cancelB = $("#mCancel");
+    const prevFocus = document.activeElement;
+    $("#mTitle").textContent = title;
+    $("#mText").textContent = text; $("#mText").hidden = !text;
+    inp.hidden = value === null; if (value !== null) inp.value = value;
+    okB.textContent = ok; okB.className = "btn" + (danger ? " danger" : "");
+    modal.hidden = false;
+    (value !== null ? inp : cancelB).focus();
+    if (value !== null) inp.select();
+    const done = r => {
+      modal.hidden = true; okB.onclick = cancelB.onclick = modal.onkeydown = modal.onclick = null;
+      if (prevFocus && prevFocus.focus) prevFocus.focus();
+      resolve(r);
+    };
+    okB.onclick = () => done(value !== null ? inp.value : true);
+    cancelB.onclick = () => done(null);
+    modal.onclick = e => { if (e.target === modal) done(null); };
+    modal.onkeydown = e => {
+      if (e.key === "Escape") done(null);
+      else if (e.key === "Enter" && value !== null) { e.preventDefault(); done(inp.value); }
+    };
+  });
+}
+
+// يمنع الضغط المتكرر على زر أثناء تنفيذ عمليته
+async function busy(btn, fn) {
+  if (btn.disabled) return;
+  const label = btn.textContent;
+  btn.disabled = true; btn.textContent = "جارٍ الحفظ…";
+  try { await fn(); } finally { btn.disabled = false; btn.textContent = label; }
+}
+
+// يرفض العملية قبل إرسالها إذا لا يوجد إنترنت، وينبّه إن تأخر تأكيد الحفظ
+function canWrite() {
+  if (navigator.onLine) return true;
+  toast("لا يوجد اتصال بالإنترنت — لم يُحفظ التغيير.", "err", 3500);
+  return false;
+}
+function track(promise) {
+  const t = setTimeout(() => toast("الحفظ يتأخر… تحقق من الاتصال، وسيكتمل تلقائيًا عند عودته.", "warn", 6000), 10000);
+  return promise.finally(() => clearTimeout(t));
+}
+
+// ---------- الحالة ----------
+const S = {
+  students: new Map(),   // id -> {id, name}
+  assignments: [],       // [{id, title, order}] مرتبة
+  done: new Map(),       // studentId -> Set(assignmentId) للتكاليف المسلّمة فقط
+  loaded: { students: false, assignments: false, submissions: false },
+  tab: "students", filter: "all", q: "",
+  open: new Set(),       // الطلاب الذين قائمة تكاليفهم مفتوحة
+  pending: new Map(),    // "sid|aid" -> القيمة المطلوبة أثناء الحفظ
+  busyIds: new Set(),    // طلاب/تكاليف قيد الحذف
+  group: null,           // ashbal | fityan
+};
+
+let fb, db, unsubs = [];
+// كل قسم له مساره الخاص: groups/{القسم}/students | assignments | submissions
+const col = name => fb.collection(db, "groups", S.group, name);
+const ref = (name, id) => fb.doc(db, "groups", S.group, name, id);
+
+// ---------- الحسابات (مصدرها الوحيد البيانات المحمّلة من القاعدة) ----------
+function studentStats(sid) {
+  const total = S.assignments.length;
+  const set = S.done.get(sid);
+  let done = 0;
+  if (set) for (const a of S.assignments) if (set.has(a.id)) done++;
+  return {
+    total, done, remaining: total - done,
+    // floor: لا تظهر 100% إلا عند الاكتمال الفعلي
+    pct: total ? Math.floor(done * 100 / total) : null,
+    complete: total > 0 && done === total,
+  };
+}
+function overallStats(rows) {
+  const n = rows.length, m = S.assignments.length;
+  let completed = 0, sum = 0;
+  for (const r of rows) { if (r.st.complete) completed++; sum += r.st.done; }
+  return { n, m, completed, rate: n && m ? Math.floor(sum * 100 / (n * m)) : null };
+}
+function submittedCount(aid) {
+  let c = 0;
+  for (const sid of S.students.keys()) { const set = S.done.get(sid); if (set && set.has(aid)) c++; }
+  return c;
+}
+
+// ---------- العرض ----------
+let renderQueued = false;
+function scheduleRender() {
+  if (renderQueued) return;
+  renderQueued = true;
+  setTimeout(() => { renderQueued = false; render(); }, 0);
+}
+
+function render() {
+  const ready = S.loaded.students && S.loaded.assignments && S.loaded.submissions;
+  $("#loading").hidden = ready || !$("#loadErr").hidden;
+  $("#studentsTab").hidden = !ready || S.tab !== "students";
+  $("#assignmentsTab").hidden = !ready || S.tab !== "assignments";
+  document.querySelectorAll(".tab").forEach(b => b.classList.toggle("active", b.dataset.tab === S.tab));
+  $("#tabAssignBtn").textContent = `إدارة التكاليف (${S.assignments.length})`;
+  if (!ready) return;
+
+  // حفظ التركيز على مربع الاختيار بعد إعادة الرسم
+  const fk = document.activeElement && document.activeElement.dataset ? document.activeElement.dataset.key : null;
+
+  const rows = [...S.students.values()].sort(byName).map(s => ({ s, st: studentStats(s.id) }));
+  renderStats(overallStats(rows));
+  renderStudents(rows);
+  renderAssignments();
+  $("#assignTitle").placeholder = `مثال: ${nextAssignTitle()}`;
+
+  if (fk) { const el = document.querySelector(`input[data-key="${fk}"]`); if (el) el.focus(); }
+}
+
+function renderStats(o) {
+  $("#stats").innerHTML = `
+    <div class="stat"><b>${o.n}</b><span>عدد الطلاب</span></div>
+    <div class="stat"><b>${o.m}</b><span>عدد التكاليف</span></div>
+    <div class="stat"><b>${o.m ? o.completed : "—"}</b><span>أكملوا جميع التكاليف</span></div>
+    <div class="stat"><b>${pctText(o.rate)}</b><span>نسبة التسليم العامة</span></div>`;
+}
+
+function renderStudents(rows) {
+  const total = S.assignments.length;
+  const incomplete = rows.filter(r => r.st.total > 0 && !r.st.complete);
+  $("#fAll").textContent = `الكل (${rows.length})`;
+  $("#fInc").textContent = `غير المكتملين (${incomplete.length})`;
+  $("#fAll").classList.toggle("on", S.filter === "all");
+  $("#fInc").classList.toggle("on", S.filter === "incomplete");
+  $("#noAssignHint").hidden = total > 0 || rows.length === 0;
+
+  const q = norm(S.q);
+  let list = S.filter === "incomplete" ? incomplete : rows;
+  if (q) list = list.filter(r => norm(r.s.name).includes(q));
+
+  const box = $("#studentList");
+  if (!rows.length) { box.innerHTML = `<div class="empty">لا يوجد طلاب بعد. أضف أول طالب من الأعلى.</div>`; return; }
+  if (!list.length) {
+    let t = "لا توجد نتائج";
+    if (q) t = `لا يوجد طالب باسم «${esc(S.q.trim())}»${S.filter === "incomplete" ? " ضمن غير المكتملين" : ""}.`;
+    else if (S.filter === "incomplete") t = total ? "جميع الطلاب أكملوا جميع التكاليف." : "لا توجد تكاليف بعد.";
+    box.innerHTML = `<div class="empty">${t}</div>`;
+    return;
+  }
+  box.innerHTML = list.map(r => studentCard(r.s, r.st)).join("");
+}
+
+function studentCard(s, st) {
+  const open = S.open.has(s.id);
+  const badge = st.total === 0 ? `<span class="badge none">لا توجد تكاليف</span>`
+    : st.complete ? `<span class="badge ok">مكتمل</span>` : `<span class="badge warn">غير مكتمل</span>`;
+  let body = "";
+  if (open) {
+    const set = S.done.get(s.id);
+    const deleting = S.busyIds.has(s.id);
+    const items = S.assignments.map(a => {
+      const key = s.id + "|" + a.id;
+      const pend = S.pending.has(key);
+      const checked = pend ? S.pending.get(key) : !!(set && set.has(a.id));
+      return `<li><label class="chk"><input type="checkbox" data-key="${esc(key)}" data-sid="${esc(s.id)}" data-aid="${esc(a.id)}"
+        ${checked ? "checked" : ""} ${pend || deleting ? "disabled" : ""}><span>${esc(a.title)}</span>${pend ? "<em>جارٍ الحفظ…</em>" : ""}</label></li>`;
+    }).join("");
+    body = `<div class="stu-body">
+      ${S.assignments.length ? `<ul class="checks">${items}</ul>` : `<p class="muted">لا توجد تكاليف بعد.</p>`}
+      <div class="stu-actions"><button class="btn text-danger" type="button" data-act="delStudent" data-id="${esc(s.id)}" ${deleting ? "disabled" : ""}>
+        ${deleting ? "جارٍ الحذف…" : "حذف الطالب"}</button></div></div>`;
+  }
+  return `<article class="stu${st.complete ? " ok" : ""}">
+    <button class="stu-toggle" type="button" data-act="toggle" data-id="${esc(s.id)}" aria-expanded="${open}">
+      <div class="stu-top"><span class="stu-name">${esc(s.name)}</span>${badge}</div>
+      <div class="bar"><i style="width:${st.pct || 0}%"></i></div>
+      <div class="nums">
+        <span>المسلّمة: <b>${st.done}</b> من <b>${st.total}</b></span>
+        <span>المتبقية: <b>${st.remaining}</b></span>
+        <span>الإنجاز: <b dir="ltr">${pctText(st.pct)}</b></span>
+      </div>
+      <div class="chev">${open ? "إخفاء التكاليف ▴" : "عرض التكاليف ▾"}</div>
+    </button>${body}</article>`;
+}
+
+function renderAssignments() {
+  const box = $("#assignmentList");
+  if (!S.assignments.length) { box.innerHTML = `<div class="empty">لا توجد تكاليف بعد.</div>`; return; }
+  const n = S.students.size;
+  box.innerHTML = S.assignments.map((a, i) => {
+    const b = S.busyIds.has(a.id);
+    return `<div class="arow">
+      <div><div class="t">${i + 1}. ${esc(a.title)}</div><small>المسلِّمون: ${submittedCount(a.id)} من ${n}</small></div>
+      <div class="btns">
+        <button class="btn secondary" type="button" data-act="rename" data-id="${esc(a.id)}" ${b ? "disabled" : ""}>تعديل</button>
+        <button class="btn text-danger" type="button" data-act="delAssign" data-id="${esc(a.id)}" ${b ? "disabled" : ""}>${b ? "جارٍ الحذف…" : "حذف"}</button>
+      </div></div>`;
+  }).join("");
+}
+
+function nextAssignTitle() {
+  let max = 0;
+  for (const a of S.assignments) { const m = a.title.match(/(\d+)\s*$/); if (m) max = Math.max(max, +m[1]); }
+  return `التكليف رقم ${Math.max(max, S.assignments.length) + 1}`;
+}
+
+// ---------- الاستماع للبيانات (تحديث حي دون إعادة تحميل الصفحة) ----------
+function startListeners() {
+  stopListeners();
+  $("#loadErr").hidden = true;
+  const onErr = e => {
+    stopListeners();
+    $("#loadErrText").textContent = errMsg(e, "تعذّر تحميل البيانات من قاعدة البيانات.");
+    $("#loadErr").hidden = false;
+    $("#loading").hidden = true;
+  };
+  unsubs.push(fb.onSnapshot(col("students"), snap => {
+    S.students = new Map(snap.docs.map(d => [d.id, { id: d.id, name: cleanText(d.data().name) || "(بدون اسم)" }]));
+    S.loaded.students = true; scheduleRender();
+  }, onErr));
+  unsubs.push(fb.onSnapshot(col("assignments"), snap => {
+    S.assignments = snap.docs.map(d => {
+      const x = d.data();
+      return { id: d.id, title: cleanText(x.title) || "(بدون اسم)", order: typeof x.order === "number" ? x.order : 0 };
+    }).sort((a, b) => a.order - b.order || a.title.localeCompare(b.title, "ar"));
+    S.loaded.assignments = true; scheduleRender();
+  }, onErr));
+  unsubs.push(fb.onSnapshot(col("submissions"), snap => {
+    S.done = new Map(snap.docs.map(d => {
+      const m = d.data().done || {};
+      return [d.id, new Set(Object.keys(m).filter(k => m[k] === true))];
+    }));
+    S.loaded.submissions = true; scheduleRender();
+  }, onErr));
+}
+function stopListeners() {
+  unsubs.forEach(u => { try { u(); } catch (_) {} });
+  unsubs = [];
+  S.loaded = { students: false, assignments: false, submissions: false };
+}
+
+// ---------- العمليات ----------
+async function setDone(sid, aid, value) {
+  const key = sid + "|" + aid;
+  if (S.pending.has(key)) return;
+  if (!S.students.has(sid) || !S.assignments.some(a => a.id === aid)) { scheduleRender(); return; }
+  if (!canWrite()) { scheduleRender(); return; }
+  S.pending.set(key, value); scheduleRender();
+  try {
+    // وثيقة واحدة لكل طالب، والمفتاح داخلها = معرّف التكليف ← لا تكرار، والتحديث في نفس السجل
+    await track(fb.setDoc(ref("submissions", sid), {
+      studentId: sid,
+      done: { [aid]: value ? true : fb.deleteField() },
+      updatedAt: fb.serverTimestamp(),
+    }, { merge: true }));
+    toast("تم الحفظ", "", 1200);
+  } catch (e) {
+    toast(errMsg(e, "تعذّر حفظ حالة التسليم."), "err", 4000);
+  } finally {
+    S.pending.delete(key); scheduleRender();
+  }
+}
+
+async function addStudents(names) {
+  const batchSize = 450;
+  for (let i = 0; i < names.length; i += batchSize) {
+    const b = fb.writeBatch(db);
+    for (const name of names.slice(i, i + batchSize))
+      b.set(fb.doc(col("students")), { name, createdAt: fb.serverTimestamp() });
+    await track(b.commit());
+  }
+}
+
+async function onAddStudent(e) {
+  e.preventDefault();
+  const inp = $("#studentName");
+  const name = cleanText(inp.value);
+  if (!name) { toast("اكتب اسم الطالب أولًا.", "err"); inp.focus(); return; }
+  await busy($("#addStudentBtn"), async () => {
+    if ([...S.students.values()].some(s => norm(s.name) === norm(name))) {
+      const ok = await ask({ title: "اسم مكرر", text: `يوجد طالب باسم «${name}». هل تريد إضافته مرة أخرى؟`, ok: "إضافة" });
+      if (!ok) return;
+    }
+    if (!canWrite()) return;
+    try {
+      await addStudents([name]);
+      inp.value = "";
+      toast(`تمت إضافة «${name}»`);
+    } catch (err) { toast(errMsg(err, "تعذّرت إضافة الطالب."), "err", 4000); }
+  });
+  inp.focus();
+}
+
+async function onBulkAdd() {
+  const ta = $("#bulkNames");
+  const seen = new Set([...S.students.values()].map(s => norm(s.name)));
+  const names = []; let skipped = 0;
+  for (const line of ta.value.split(/\r?\n/)) {
+    const name = cleanText(line);
+    if (!name) continue;
+    if (seen.has(norm(name))) { skipped++; continue; }
+    seen.add(norm(name)); names.push(name);
+  }
+  if (!names.length) { toast(skipped ? "كل الأسماء موجودة مسبقًا." : "اكتب الأسماء أولًا، كل اسم في سطر.", "err", 3000); return; }
+  await busy($("#bulkBtn"), async () => {
+    const ok = await ask({ title: "إضافة قائمة طلاب", ok: "إضافة",
+      text: `عدد الأسماء التي ستُضاف: ${names.length}` + (skipped ? `\nأسماء مكررة أو موجودة مسبقًا سيتم تجاهلها: ${skipped}` : "") });
+    if (!ok || !canWrite()) return;
+    try {
+      await addStudents(names);
+      ta.value = ""; $("#bulkBox").open = false;
+      toast(`تمت إضافة الأسماء (${names.length})`, "", 3000);
+    } catch (err) {
+      toast(errMsg(err, "تعذّرت إضافة القائمة كاملة. راجع القائمة قبل إعادة المحاولة."), "err", 5000);
+    }
+  });
+}
+
+async function onDeleteStudent(btn, sid) {
+  const s = S.students.get(sid);
+  if (!s || S.busyIds.has(sid)) return;
+  const st = studentStats(sid);
+  const ok = await ask({ title: "حذف طالب", danger: true, ok: "حذف نهائي",
+    text: `سيُحذف الطالب «${s.name}» وجميع سجلات تسليمه (التكاليف المسلّمة: ${st.done}).\nلا يمكن التراجع عن هذه العملية.` });
+  if (!ok || !canWrite()) return;
+  S.busyIds.add(sid); scheduleRender();
+  try {
+    const b = fb.writeBatch(db);   // حذف الطالب وسجلاته معًا في عملية واحدة
+    b.delete(ref("students", sid));
+    b.delete(ref("submissions", sid));
+    await track(b.commit());
+    S.open.delete(sid);
+    toast(`تم حذف «${s.name}»`);
+  } catch (err) { toast(errMsg(err, "تعذّر حذف الطالب."), "err", 4000); }
+  finally { S.busyIds.delete(sid); scheduleRender(); }
+}
+
+async function onAddAssignment(e) {
+  e.preventDefault();
+  const inp = $("#assignTitle");
+  const title = cleanText(inp.value) || nextAssignTitle();
+  if (S.assignments.some(a => norm(a.title) === norm(title))) { toast(`يوجد تكليف باسم «${title}».`, "err", 3000); return; }
+  await busy($("#addAssignBtn"), async () => {
+    if (!canWrite()) return;
+    const order = S.assignments.reduce((m, a) => Math.max(m, a.order), 0) + 1;
+    try {
+      await track(fb.setDoc(fb.doc(col("assignments")), { title, order, createdAt: fb.serverTimestamp() }));
+      inp.value = "";
+      toast(`تمت إضافة «${title}»`);
+    } catch (err) { toast(errMsg(err, "تعذّرت إضافة التكليف."), "err", 4000); }
+  });
+}
+
+async function onRenameAssignment(btn, aid) {
+  const a = S.assignments.find(x => x.id === aid);
+  if (!a) return;
+  const v = await ask({ title: "تعديل اسم التكليف", value: a.title, ok: "حفظ" });
+  if (v === null) return;
+  const title = cleanText(v);
+  if (!title) { toast("اسم التكليف لا يمكن أن يكون فارغًا.", "err"); return; }
+  if (title === a.title) return;
+  if (S.assignments.some(x => x.id !== aid && norm(x.title) === norm(title))) { toast(`يوجد تكليف باسم «${title}».`, "err", 3000); return; }
+  if (!canWrite()) return;
+  await busy(btn, async () => {
+    try {
+      await track(fb.setDoc(ref("assignments", aid), { title }, { merge: true }));
+      toast("تم حفظ الاسم الجديد");
+    } catch (err) { toast(errMsg(err, "تعذّر تعديل التكليف."), "err", 4000); }
+  });
+}
+
+async function onDeleteAssignment(btn, aid) {
+  const a = S.assignments.find(x => x.id === aid);
+  if (!a || S.busyIds.has(aid)) return;
+  // كل وثائق التسليم التي تحتوي هذا التكليف (حتى لطلاب محذوفين) لتنظيفها
+  const affected = [];
+  for (const [sid, set] of S.done) if (set.has(aid)) affected.push(sid);
+  const ok = await ask({ title: "حذف تكليف", danger: true, ok: "حذف نهائي",
+    text: `سيُحذف «${a.title}» من جميع الطلاب، ويُزال تسجيل تسليمه من الطلاب الذين سلّموه (${submittedCount(aid)}).\nلا يمكن التراجع عن هذه العملية.` });
+  if (!ok || !canWrite()) return;
+  S.busyIds.add(aid); scheduleRender();
+  try {
+    const batchSize = 450;
+    for (let i = 0; i < affected.length || i === 0; i += batchSize) {
+      const b = fb.writeBatch(db);
+      if (i === 0) b.delete(ref("assignments", aid));
+      for (const sid of affected.slice(i, i + batchSize))
+        b.set(ref("submissions", sid), { done: { [aid]: fb.deleteField() } }, { merge: true });
+      await track(b.commit());
+    }
+    toast(`تم حذف «${a.title}»`);
+  } catch (err) {
+    // الحساب يتجاهل أي تسليم لتكليف غير موجود، فالأرقام تبقى صحيحة حتى لو لم يكتمل التنظيف
+    toast(errMsg(err, "تعذّر إكمال حذف التكليف. أعد المحاولة."), "err", 5000);
+  } finally { S.busyIds.delete(aid); scheduleRender(); }
+}
+
+// ---------- الدخول والخروج ----------
+function showOnly(view) {
+  $("#bootMsg").hidden = true;
+  $("#setupView").hidden = view !== "setup";
+  $("#groupView").hidden = view !== "groups" && view !== "setup";
+  $("#appView").hidden = view !== "app";
+  $("#switchBtn").hidden = view !== "app";
+  $("#subTitle").textContent = view === "app" ? `قسم ${GROUPS[S.group]}` : "إدارة الطلاب والتكاليف ومتابعة التسليم من مكان واحد";
+}
+
+function enterGroup(g) {
+  if (!GROUPS[g]) return;
+  if (!db) { $("#groupMsg").textContent = configReady ? "تعذّر تحميل Firebase. تحقق من الاتصال ثم أعد تحميل الصفحة." : "أضف إعدادات Firebase في الكود أولًا."; return; }
+  S.group = g;
+  try { localStorage.setItem(GROUP_KEY, g); } catch (_) {}
+  document.title = `متابعة تكاليف ${GROUPS[g]}`;
+  showOnly("app");
+  startListeners();
+  render();
+}
+function leaveGroup() {
+  stopListeners();
+  S.group = null;
+  S.students = new Map(); S.assignments = []; S.done = new Map();
+  S.open.clear(); S.pending.clear(); S.busyIds.clear(); S.q = ""; $("#search").value = "";
+  S.tab = "students"; S.filter = "all";
+  $("#studentList").innerHTML = $("#assignmentList").innerHTML = $("#stats").innerHTML = "";
+  try { localStorage.removeItem(GROUP_KEY); } catch (_) {}
+  document.title = "متابعة تكاليف الطلاب";
+  showOnly("groups");
+}
+
+async function onSwitchGroup() {
+  if (S.pending.size || S.busyIds.size) {
+    const ok = await ask({ title: "عمليات حفظ جارية", text: "توجد تغييرات لم يتأكد حفظها بعد. هل تريد تغيير القسم على أي حال؟", ok: "تغيير القسم", danger: true });
+    if (!ok) return;
+  }
+  leaveGroup();
+}
+
+// ---------- ربط الأحداث ----------
+$("#rulesText").textContent = RULES;
+document.querySelectorAll("[data-group]").forEach(b => b.addEventListener("click", () => enterGroup(b.dataset.group)));
+$("#switchBtn").addEventListener("click", onSwitchGroup);
+$("#retryBtn").addEventListener("click", () => { $("#loadErr").hidden = true; startListeners(); render(); });
+$("#addStudentForm").addEventListener("submit", onAddStudent);
+$("#bulkBtn").addEventListener("click", onBulkAdd);
+$("#addAssignForm").addEventListener("submit", onAddAssignment);
+$("#search").addEventListener("input", e => { S.q = e.target.value; scheduleRender(); });
+document.querySelectorAll(".tab").forEach(b => b.addEventListener("click", () => { S.tab = b.dataset.tab; render(); }));
+document.querySelectorAll("[data-filter]").forEach(b => b.addEventListener("click", () => { S.filter = b.dataset.filter; render(); }));
+
+$("#studentList").addEventListener("click", e => {
+  const t = e.target.closest("[data-act]");
+  if (!t) return;
+  const id = t.dataset.id;
+  if (t.dataset.act === "toggle") { S.open.has(id) ? S.open.delete(id) : S.open.add(id); render(); }
+  else if (t.dataset.act === "delStudent") onDeleteStudent(t, id);
+});
+$("#studentList").addEventListener("change", e => {
+  const c = e.target;
+  if (c.matches('input[type="checkbox"][data-sid]')) setDone(c.dataset.sid, c.dataset.aid, c.checked);
+});
+$("#assignmentList").addEventListener("click", e => {
+  const t = e.target.closest("[data-act]");
+  if (!t) return;
+  if (t.dataset.act === "rename") onRenameAssignment(t, t.dataset.id);
+  else if (t.dataset.act === "delAssign") onDeleteAssignment(t, t.dataset.id);
+});
+
+const updateNet = () => { $("#netBar").hidden = navigator.onLine; };
+window.addEventListener("online", updateNet);
+window.addEventListener("offline", updateNet);
+window.addEventListener("beforeunload", e => { if (S.pending.size || S.busyIds.size) { e.preventDefault(); e.returnValue = ""; } });
+updateNet();
+
+// ---------- التشغيل ----------
+(async function boot() {
+  if (!configReady) {
+    showOnly("setup");
+    $("#groupMsg").textContent = "أضف إعدادات Firebase في الكود أولًا.";
+    return;
+  }
+  try {
+    const [appM, fsM] = await Promise.all([import(SDK + "firebase-app.js"), import(SDK + "firebase-firestore.js")]);
+    fb = fsM;
+    db = fsM.getFirestore(appM.initializeApp(firebaseConfig));
+  } catch (err) {
+    showOnly("groups");
+    $("#groupMsg").textContent = "تعذّر تحميل Firebase. تحقق من الاتصال ثم أعد تحميل الصفحة.";
+    return;
+  }
+  // يفتح آخر قسم اختير على هذا الجهاز مباشرة
+  let last = null;
+  try { last = localStorage.getItem(GROUP_KEY); } catch (_) {}
+  if (GROUPS[last]) enterGroup(last); else showOnly("groups");
+})();
+</script>
+</body>
+</html>
