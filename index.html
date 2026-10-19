@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#1d5e3b">
+<meta name="theme-color" content="#2373a8">
 <title>متابعة تكاليف الطلاب</title>
 <meta name="description" content="من سلّم؟ وكم بقي؟ ونسبة الإنجاز لكل طالب — متابعة تكاليف الأشبال والفتيان.">
 <!-- معاينة الرابط في واتساب وغيره (الروابط يجب أن تكون كاملة) -->
@@ -21,162 +21,204 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="icon.png">
 <link rel="apple-touch-icon" href="icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --g:#1d5e3b; --g2:#226a43; --gl:#e6eee8; --bg:#f3f4f2; --card:#fff; --line:#e1e5e1;
-    --tx:#1f2421; --mu:#5d6961; --ok:#1c7442; --okbg:#e2f2e7; --warn:#8a5a00; --warnbg:#fff3d4;
-    --red:#b42318; --redbg:#fdecea; --r:18px;
+    --g:#1a5b85; --g2:#2373a8; --gl:#e8f2f9; --gl2:#d6e8f4; --bg:#f4f7fa; --card:#fff; --line:#e3e9ef;
+    --tx:#17212b; --mu:#66737f; --ok:#1c7442; --okbg:#e3f3e8; --warn:#8a5a00; --warnbg:#fff4d6;
+    --red:#c0352b; --redbg:#fdeeec; --blue:#3346d3; --bluebg:#e9ecff; --yel:#e2a400;
+    --r:14px; --sh:0 1px 2px rgba(16,24,40,.05),0 2px 10px rgba(16,24,40,.04);
   }
   *{box-sizing:border-box}
   html{-webkit-text-size-adjust:100%}
   body{margin:0;background:var(--bg);color:var(--tx);
-    font:16px/1.7 system-ui,-apple-system,"Segoe UI",Tahoma,"Noto Sans Arabic",Arial,sans-serif}
+    font:15px/1.65 "IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",Tahoma,"Noto Sans Arabic",Arial,sans-serif}
   [hidden]{display:none !important}
-  .wrap{max-width:880px;margin:0 auto;padding:0 16px}
+  .wrap{max-width:820px;margin:0 auto;padding:0 16px}
 
-  .top{background:var(--g);color:#fff;padding:22px 0 18px}
-  .top-in{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
-  .top h1{margin:0;font-size:1.6rem;line-height:1.4}
-  .top .sub{margin:6px 0 0;opacity:.85;font-size:.95rem}
-  .top .btn{background:rgba(255,255,255,.15);flex-shrink:0}
+  /* الترويسة */
+  .top{background:linear-gradient(135deg,#2a80b9 0%,#17496b 100%);color:#fff;padding:16px 0 18px}
+  .top-in{display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .brand{display:flex;align-items:center;gap:12px;min-width:0}
+  .brand img{width:42px;height:42px;border-radius:11px;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+  .top h1{margin:0;font-size:1.2rem;line-height:1.4;font-weight:700}
+  .top .sub{margin:2px 0 0;opacity:.82;font-size:.84rem}
+  .top .btn{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.25);flex-shrink:0;
+    min-height:34px;padding:4px 12px;font-size:.84rem}
+  .top .btn:hover{background:rgba(255,255,255,.22)}
 
-  .netbar{background:var(--red);color:#fff;text-align:center;padding:8px 16px;font-weight:600;font-size:.95rem}
-  main{padding-top:16px;padding-bottom:28px}
-  footer{color:var(--mu);font-size:.85rem;text-align:center;padding:0 16px 28px}
+  .netbar{background:var(--red);color:#fff;text-align:center;padding:7px 16px;font-weight:600;font-size:.88rem}
+  main{padding-top:16px;padding-bottom:24px}
+  footer{color:var(--mu);font-size:.78rem;text-align:center;padding:0 16px 24px;opacity:.8}
 
-  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin-bottom:14px}
-  .card h2{margin:0 0 12px;font-size:1.35rem}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:12px;box-shadow:var(--sh)}
+  .card h2{margin:0 0 10px;font-size:1.05rem;font-weight:700}
   .muted{color:var(--mu)}
   .center{text-align:center}
-  .small{font-size:.88rem}
+  .small{font-size:.84rem}
 
-  .btn{font:inherit;font-weight:600;border:0;border-radius:12px;padding:9px 18px;min-height:44px;
-    background:var(--g2);color:#fff;cursor:pointer}
-  .btn.secondary{background:var(--gl);color:var(--tx)}
+  /* الأزرار */
+  .btn{font:inherit;font-size:.88rem;font-weight:600;border:0;border-radius:10px;padding:6px 14px;min-height:38px;
+    background:var(--g2);color:#fff;cursor:pointer;transition:background-color .15s,border-color .15s}
+  .btn:hover{background:var(--g)}
+  .btn.secondary{background:var(--gl);color:var(--g)}
+  .btn.secondary:hover{background:var(--gl2)}
   .btn.danger{background:var(--red)}
-  .btn.text-danger{background:none;color:var(--red);padding:8px 6px}
+  .btn.danger:hover{background:#a52b22}
+  .btn.text-danger{background:none;color:var(--red);padding:5px 8px;min-height:34px}
+  .btn.text-danger:hover{background:var(--redbg)}
   .btn:disabled{opacity:.55;cursor:not-allowed}
-  .btn:focus-visible,.chk input:focus-visible,.stu-toggle:focus-visible{outline:3px solid #8cc5a1;outline-offset:2px}
+  .btn:focus-visible,.chk input:focus-visible,.stu-toggle:focus-visible,.tab:focus-visible{outline:3px solid #a9d0ea;outline-offset:2px}
 
+  /* الحقول (16px حتى لا يكبّر iPhone الصفحة عند الكتابة) */
   label.field{display:block;margin-bottom:12px}
-  label.field span{display:block;color:var(--mu);font-size:.92rem;margin-bottom:4px}
-  input[type=text],input[type=email],input[type=password],input[type=search],textarea{
-    font:inherit;color:inherit;width:100%;padding:9px 14px;min-height:46px;
-    border:1px solid #cdd4ce;border-radius:12px;background:#fff}
-  textarea{min-height:120px;resize:vertical}
-  input:focus,textarea:focus{outline:none;border-color:var(--g2);box-shadow:0 0 0 3px #d5e8dc}
+  label.field span{display:block;color:var(--mu);font-size:.88rem;margin-bottom:4px}
+  input[type=text],input[type=email],input[type=password],input[type=search],textarea,select{
+    font:inherit;font-size:16px;color:inherit;width:100%;padding:7px 12px;min-height:40px;
+    border:1px solid #d3dce5;border-radius:10px;background:#fff}
+  input::placeholder,textarea::placeholder{color:#94a1ad}
+  textarea{min-height:110px;resize:vertical}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--g2);box-shadow:0 0 0 3px #d6e9f6}
   .row{display:flex;gap:8px;align-items:stretch}
   .row > input{flex:1;min-width:0}
-  .msg{margin:10px 0 0;font-size:.93rem;min-height:1.2em}
+  .row > .btn{flex-shrink:0}
+  .msg{margin:10px 0 0;font-size:.88rem;min-height:1.2em}
   .msg.err{color:var(--red)}
-  .alert{background:var(--redbg);color:var(--red);border-radius:12px;padding:12px 14px;margin-bottom:14px}
+  .alert{background:var(--redbg);color:var(--red);border-radius:10px;padding:10px 12px;margin-bottom:12px;font-size:.9rem}
   .alert .btn{margin-top:8px}
-  details.more{margin-top:12px}
-  details.more summary{cursor:pointer;color:var(--g2);font-weight:600}
+  .hint{background:var(--warnbg);color:var(--warn);border-radius:10px;padding:9px 12px;margin-bottom:10px;font-size:.88rem}
+  details.more{margin-top:10px}
+  details.more summary{cursor:pointer;color:var(--g2);font-weight:600;font-size:.88rem}
   details.more[open] summary{margin-bottom:8px}
-  ol.steps{padding-inline-start:22px;margin:10px 0}
-  pre.rules{direction:ltr;text-align:left;background:#f6f7f6;border:1px solid var(--line);border-radius:12px;
-    padding:12px;overflow:auto;font-size:.8rem;line-height:1.5}
+  details.more .btn{margin-top:6px}
+  ol.steps{padding-inline-start:22px;margin:10px 0;font-size:.92rem}
+  pre.rules{direction:ltr;text-align:left;background:#f5f8fb;border:1px solid var(--line);border-radius:10px;
+    padding:12px;overflow:auto;font-size:.76rem;line-height:1.5}
 
+  /* اختيار القسم */
   .groups{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .btn.big{min-height:72px;font-size:1.2rem;border-radius:16px}
-  .tabs{display:flex;gap:8px;margin-bottom:14px}
-  .tab{flex:1;font:inherit;font-weight:700;border:1px solid var(--line);background:var(--card);color:var(--tx);
-    border-radius:14px;padding:10px;min-height:48px;cursor:pointer}
-  .tab.active{background:var(--g);border-color:var(--g);color:#fff}
+  .btn.big{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:110px;
+    background:#fff;color:var(--g);border:1.5px solid var(--line);border-radius:14px;font-size:1.05rem}
+  .btn.big:hover{border-color:var(--g2);background:var(--gl)}
+  .btn.big svg{width:34px;height:34px;padding:7px;background:var(--gl);border-radius:10px;box-sizing:content-box}
 
-  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
-  .stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px}
-  .stat b{display:block;font-size:1.6rem;line-height:1.3;color:var(--g)}
-  .stat span{color:var(--mu);font-size:.88rem}
+  /* التبويبات */
+  .tabs{display:flex;gap:4px;background:#e4ebf2;padding:4px;border-radius:12px;margin-bottom:14px}
+  .tab{flex:1;font:inherit;font-size:.9rem;font-weight:600;border:0;background:transparent;color:var(--mu);
+    border-radius:9px;padding:6px 10px;min-height:38px;cursor:pointer}
+  .tab.active{background:#fff;color:var(--g);box-shadow:0 1px 3px rgba(16,24,40,.1)}
 
-  .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-  .toolbar input{flex:1 1 220px}
-  .filters{display:flex;gap:8px;flex-wrap:wrap;width:100%}
-  .filters .btn{background:var(--card);color:var(--tx);border:1px solid var(--line);font-weight:600;
-    display:inline-flex;align-items:center;gap:8px;padding:7px 14px;min-height:42px}
+  /* الإحصائيات */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;box-shadow:var(--sh)}
+  .stat b{display:block;font-size:1.35rem;line-height:1.35;color:var(--g);font-weight:700}
+  .stat span{color:var(--mu);font-size:.78rem}
+
+  /* البحث والتصفية */
+  .toolbar{position:relative;margin-bottom:10px}
+  .toolbar input{padding-inline-start:38px}
+  .toolbar svg{position:absolute;inset-inline-start:12px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:#94a1ad;pointer-events:none}
+  .filters{display:flex;gap:6px;flex-wrap:wrap}
+  .filters .btn{background:#fff;color:var(--tx);border:1px solid var(--line);font-weight:500;font-size:.82rem;
+    display:inline-flex;align-items:center;gap:6px;padding:3px 11px;min-height:32px;border-radius:999px}
+  .filters .btn:hover{border-color:#c4d1dc;background:#f8fafc}
   .filters .btn.on{background:var(--g2);color:#fff;border-color:var(--g2)}
-  select{font:inherit;color:inherit;padding:9px 12px;min-height:46px;border:1px solid #cdd4ce;border-radius:12px;background:#fff;max-width:100%}
-  #domainFilter{flex:1 1 100%}
-  .dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;display:inline-block;background:#cfd5d0}
+  #domainFilter{margin-top:10px}
+
+  /* أقسام مطوية تفتح بالضغط */
+  details.fold{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:10px;box-shadow:var(--sh)}
+  details.fold > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;
+    padding:7px 14px;min-height:48px;font-weight:600;font-size:.94rem;border-radius:12px}
+  details.fold > summary:hover{background:#f8fafc}
+  details.fold > summary::-webkit-details-marker{display:none}
+  details.fold > summary::after{content:"";width:7px;height:7px;border:solid var(--mu);border-width:0 2px 2px 0;
+    transform:rotate(45deg);margin-inline-start:auto;margin-top:-3px;flex-shrink:0}
+  details.fold[open] > summary::after{transform:rotate(-135deg);margin-top:3px}
+  details.fold > summary:focus-visible{outline:3px solid #a9d0ea;outline-offset:2px}
+  details.fold .fold-body{padding:2px 14px 14px}
+  .ic{width:30px;height:30px;border-radius:9px;background:var(--gl);color:var(--g);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+  .ic svg{width:16px;height:16px}
+  .fstate{color:var(--g2);font-weight:500;font-size:.82rem;overflow-wrap:anywhere}
+  .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;display:inline-block;background:#cfd5d0}
 
   /* ألوان الحالة */
-  :root{--blue:#1d4ed8;--bluebg:#e3ecff}
-  .dot.s-blue{background:var(--blue)} .dot.s-green{background:var(--ok)} .dot.s-yellow{background:#e0a800}
-  .dot.s-normal{background:#b8c0ba} .dot.s-red{background:var(--red)}
+  .dot.s-blue{background:var(--blue)} .dot.s-green{background:var(--ok)} .dot.s-yellow{background:var(--yel)}
+  .dot.s-normal{background:#b6c0ca} .dot.s-red{background:var(--red)}
   .badge.s-blue{background:var(--bluebg);color:var(--blue)}
   .badge.s-green{background:var(--okbg);color:var(--ok)}
   .badge.s-yellow{background:var(--warnbg);color:var(--warn)}
-  .badge.s-normal,.badge.s-none{background:#eef0ee;color:var(--mu)}
+  .badge.s-normal,.badge.s-none{background:#eef2f5;color:var(--mu)}
   .badge.s-red{background:var(--redbg);color:var(--red)}
-  .stu.s-blue{border-inline-start:6px solid var(--blue)}
-  .stu.s-green{border-inline-start:6px solid var(--ok)}
-  .stu.s-yellow{border-inline-start:6px solid #e0a800}
-  .stu.s-red{border-inline-start:6px solid var(--red)}
+  .stu.s-blue{border-inline-start:4px solid var(--blue)}
+  .stu.s-green{border-inline-start:4px solid var(--ok)}
+  .stu.s-yellow{border-inline-start:4px solid var(--yel)}
+  .stu.s-red{border-inline-start:4px solid var(--red)}
   .stu.s-blue .bar i{background:var(--blue)}
-  .stu.s-yellow .bar i{background:#e0a800}
+  .stu.s-yellow .bar i{background:var(--yel)}
   .stu.s-red .bar i{background:var(--red)}
-  .dom-h{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px;padding:6px 10px;
-    background:#f3f5f3;border-radius:10px;font-weight:700}
-  .dom-h small{font-weight:600;white-space:nowrap}
+  .stu.s-green .bar i{background:var(--ok)}
+  .dom-h{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px;padding:4px 10px;
+    background:#f1f5f9;border-radius:8px;font-weight:600;font-size:.86rem}
+  .dom-h small{font-weight:500;font-size:.78rem;white-space:nowrap}
   .dom-h .yes{color:var(--ok)} .dom-h .no{color:var(--red)}
   .aform{display:flex;gap:8px;flex-wrap:wrap}
-  .aform input{flex:2 1 200px;min-width:0} .aform select{flex:1 1 140px}
-  .modal-box select{width:100%;margin-bottom:14px}
-  .hint{background:var(--warnbg);color:var(--warn);border-radius:12px;padding:10px 14px;margin-bottom:12px}
+  .aform input{flex:2 1 200px;min-width:0} .aform select{flex:1 1 140px;width:auto}
+  .modal-box select{margin-bottom:12px}
 
-  .stu{background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:10px;overflow:hidden}
-  .stu.ok{border-color:#b9dcc5}
+  /* بطاقة الطالب */
+  .stu{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:8px;overflow:hidden;box-shadow:var(--sh)}
   .stu-toggle{display:block;width:100%;text-align:inherit;font:inherit;color:inherit;background:none;border:0;
-    padding:14px 16px;cursor:pointer}
+    padding:11px 14px;cursor:pointer}
+  .stu-toggle:hover{background:#fafcfd}
   .stu-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-  .stu-name{font-weight:700;font-size:1.08rem;overflow-wrap:anywhere}
-  .badge{flex-shrink:0;font-size:.82rem;font-weight:700;border-radius:999px;padding:2px 12px;white-space:nowrap}
-  .badge.ok{background:var(--okbg);color:var(--ok)}
-  .badge.warn{background:var(--warnbg);color:var(--warn)}
-  .badge.none{background:#eef0ee;color:var(--mu)}
-  .bar{height:8px;background:#e9ece9;border-radius:99px;margin:10px 0 6px;overflow:hidden}
+  .stu-name{font-weight:600;font-size:.98rem;overflow-wrap:anywhere}
+  .badge{flex-shrink:0;font-size:.74rem;font-weight:600;border-radius:999px;padding:1px 10px;white-space:nowrap}
+  .bar{height:6px;background:#e9eef3;border-radius:99px;margin:8px 0 6px;overflow:hidden}
   .bar i{display:block;height:100%;background:var(--g2);border-radius:99px}
-  .nums{display:flex;flex-wrap:wrap;gap:4px 16px;color:var(--mu);font-size:.92rem}
-  .nums b{color:var(--tx)}
-  .chev{color:var(--g2);font-size:.88rem;font-weight:600;margin-top:4px}
-  .stu-body{border-top:1px solid var(--line);padding:6px 16px 10px}
+  .nums{display:flex;flex-wrap:wrap;gap:2px 14px;color:var(--mu);font-size:.8rem}
+  .nums b{color:var(--tx);font-weight:600}
+  .chev{color:var(--g2);font-size:.78rem;font-weight:600;margin-top:4px}
+  .stu-body{border-top:1px solid var(--line);padding:4px 14px 10px;background:#fbfcfe}
   .checks{list-style:none;margin:0;padding:0}
-  .chk{display:flex;align-items:center;gap:12px;min-height:50px;padding:4px 0;cursor:pointer;border-bottom:1px dashed var(--line)}
+  .chk{display:flex;align-items:center;gap:12px;min-height:44px;padding:3px 2px;cursor:pointer;border-bottom:1px dashed var(--line);font-size:.92rem}
   .checks li:last-child .chk{border-bottom:0}
-  .chk input{width:28px;height:28px;flex-shrink:0;accent-color:var(--g2);cursor:pointer;margin:0}
+  .chk input{width:22px;height:22px;flex-shrink:0;accent-color:var(--g2);cursor:pointer;margin:0}
   .chk input:disabled{cursor:wait}
   .chk span{overflow-wrap:anywhere}
-  .chk em{font-style:normal;color:var(--mu);font-size:.82rem;margin-inline-start:auto;white-space:nowrap}
+  .chk em{font-style:normal;color:var(--mu);font-size:.76rem;margin-inline-start:auto;white-space:nowrap}
   .stu-actions{display:flex;justify-content:flex-end;margin-top:6px}
-  .empty{text-align:center;color:var(--mu);padding:28px 12px}
+  .empty{text-align:center;color:var(--mu);padding:24px 12px;font-size:.92rem}
 
-  .arow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
+  /* قوائم التكاليف والمجالات */
+  .arow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}
   .arow:last-child{border-bottom:0}
-  .arow .t{font-weight:700;overflow-wrap:anywhere}
-  .arow small{display:block;color:var(--mu)}
-  .arow .btns{display:flex;gap:6px;flex-shrink:0}
+  .arow .t{font-weight:600;font-size:.93rem;overflow-wrap:anywhere}
+  .arow small{display:block;color:var(--mu);font-size:.78rem}
+  .arow .btns{display:flex;gap:4px;flex-shrink:0}
+  .arow .btns .btn{min-height:32px;padding:3px 12px;font-size:.82rem}
 
   #toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:30;max-width:calc(100% - 32px);
-    background:#24302a;color:#fff;border-radius:12px;padding:10px 18px;font-weight:600;box-shadow:0 6px 20px rgba(0,0,0,.18)}
+    background:#1c2733;color:#fff;border-radius:10px;padding:8px 16px;font-weight:500;font-size:.88rem;box-shadow:0 8px 24px rgba(0,0,0,.18)}
   #toast.err{background:var(--red)}
   #toast.warn{background:#7a5200}
 
-  .modal{position:fixed;inset:0;background:rgba(20,28,23,.45);display:flex;align-items:center;justify-content:center;padding:16px;z-index:40}
-  .modal-box{background:#fff;border-radius:var(--r);padding:20px;width:100%;max-width:440px}
-  .modal-box h3{margin:0 0 8px;font-size:1.2rem}
-  .modal-box p{margin:0 0 14px;white-space:pre-line}
-  .modal-box input{margin-bottom:14px}
+  .modal{position:fixed;inset:0;background:rgba(14,22,34,.45);display:flex;align-items:center;justify-content:center;padding:16px;z-index:40}
+  .modal-box{background:#fff;border-radius:16px;padding:18px;width:100%;max-width:420px;box-shadow:0 20px 50px rgba(0,0,0,.2)}
+  .modal-box h3{margin:0 0 6px;font-size:1.05rem}
+  .modal-box p{margin:0 0 12px;white-space:pre-line;font-size:.92rem;color:var(--mu)}
+  .modal-box input{margin-bottom:12px}
   .modal-btns{display:flex;gap:8px}
   .modal-btns .btn{flex:1}
 
   @media (max-width:640px){
-    .top h1{font-size:1.35rem}
+    .top h1{font-size:1.08rem}
+    .top .sub{font-size:.8rem}
+    .brand img{width:38px;height:38px}
     .stats{grid-template-columns:repeat(2,1fr)}
-    .stat b{font-size:1.4rem}
-    .filters .btn{flex:1 1 auto;padding:7px 10px;font-size:.92rem}
-    .arow{flex-wrap:wrap}
-    .arow .btns{width:100%;justify-content:flex-end}
+    .stat b{font-size:1.25rem}
+    .arow .btns .btn{padding:3px 9px}
   }
 </style>
 </head>
@@ -184,9 +226,12 @@
 
 <header class="top">
   <div class="wrap top-in">
-    <div>
-      <h1>متابعة تكاليف الطلاب</h1>
-      <p class="sub" id="subTitle">إدارة الطلاب والتكاليف ومتابعة التسليم من مكان واحد</p>
+    <div class="brand">
+      <img src="icon.png" alt="">
+      <div>
+        <h1>متابعة تكاليف الطلاب</h1>
+        <p class="sub" id="subTitle">إدارة الطلاب والتكاليف ومتابعة التسليم من مكان واحد</p>
+      </div>
     </div>
     <button id="switchBtn" class="btn" type="button" hidden>تغيير القسم</button>
   </div>
@@ -217,8 +262,8 @@
     <h2>اختر القسم</h2>
     <p class="muted">لكل قسم طلابه وتكاليفه الخاصة.</p>
     <div class="groups">
-      <button class="btn big" type="button" data-group="ashbal">دخول الأشبال</button>
-      <button class="btn big" type="button" data-group="fityan">دخول الفتيان</button>
+      <button class="btn big" type="button" data-group="ashbal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg>دخول الأشبال</button>
+      <button class="btn big" type="button" data-group="fityan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 22l5-3 5 3-1.5-8"/></svg>دخول الفتيان</button>
     </div>
     <p id="groupMsg" class="msg err" role="alert"></p>
   </section>
@@ -236,48 +281,61 @@
     <div id="studentsTab" hidden>
       <div class="stats" id="stats"></div>
 
-      <div class="card">
-        <form id="addStudentForm" class="row" novalidate>
-          <input id="studentName" type="text" maxlength="120" placeholder="اسم الطالب الجديد" autocomplete="off" aria-label="اسم الطالب الجديد">
-          <button id="addStudentBtn" class="btn" type="submit">إضافة طالب</button>
-        </form>
-        <details class="more" id="bulkBox">
-          <summary>إضافة عدة طلاب دفعة واحدة</summary>
-          <textarea id="bulkNames" placeholder="اكتب كل اسم في سطر مستقل"></textarea>
-          <p class="muted small">الأسماء المكررة أو الموجودة مسبقًا تُتجاهل تلقائيًا.</p>
-          <button id="bulkBtn" class="btn" type="button">إضافة القائمة</button>
-        </details>
-      </div>
+      <details class="fold" id="addFold">
+        <summary><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg></span><span>إضافة طلاب</span></summary>
+        <div class="fold-body">
+          <form id="addStudentForm" class="row" novalidate>
+            <input id="studentName" type="text" maxlength="120" placeholder="اسم الطالب الجديد" autocomplete="off" aria-label="اسم الطالب الجديد">
+            <button id="addStudentBtn" class="btn" type="submit">إضافة طالب</button>
+          </form>
+          <details class="more" id="bulkBox">
+            <summary>إضافة عدة طلاب دفعة واحدة</summary>
+            <textarea id="bulkNames" placeholder="اكتب كل اسم في سطر مستقل"></textarea>
+            <p class="muted small">الأسماء المكررة أو الموجودة مسبقًا تُتجاهل تلقائيًا.</p>
+            <button id="bulkBtn" class="btn" type="button">إضافة القائمة</button>
+          </details>
+        </div>
+      </details>
 
       <div class="toolbar">
         <input id="search" type="search" placeholder="ابحث عن طالب بالاسم" autocomplete="off" aria-label="بحث">
-        <div class="filters" id="filters"></div>
-        <select id="domainFilter" aria-label="تصفية حسب المجال" hidden></select>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
       </div>
+      <details class="fold" id="filterFold">
+        <summary><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18l-7 8.5V19l-4 2v-7.5z"/></svg></span><span>التصفية</span><span id="filterState" class="fstate"></span></summary>
+        <div class="fold-body">
+          <div class="filters" id="filters"></div>
+          <select id="domainFilter" aria-label="تصفية حسب المجال" hidden></select>
+        </div>
+      </details>
       <div id="noAssignHint" class="hint" hidden>لا توجد تكاليف بعد — أضفها من «إدارة التكاليف»، وستظهر لكل الطلاب تلقائيًا.</div>
       <div id="studentList"></div>
     </div>
 
     <div id="assignmentsTab" hidden>
-      <div class="card">
-        <h2>المجالات</h2>
-        <p class="muted small" style="margin:0 0 10px">مشتركة بين الأشبال والفتيان. يُعدّ الطالب مكملًا للمجال إذا سلّم تكليفًا واحدًا منه.</p>
-        <div id="domainWarn" class="alert" hidden>تعذّر تحميل المجالات. حدّث قواعد Firestore من دليل الإعداد (أضف قسم domains)، ثم أعد تحميل الصفحة.</div>
-        <form id="addDomainForm" class="row" novalidate>
-          <input id="domainName" type="text" maxlength="120" placeholder="اسم المجال الجديد" autocomplete="off" aria-label="اسم المجال الجديد">
-          <button id="addDomainBtn" class="btn" type="submit">إضافة مجال</button>
-        </form>
-        <div id="domainList"></div>
-      </div>
-      <div class="card">
-        <h2>إضافة تكليف</h2>
-        <form id="addAssignForm" class="aform" novalidate>
-          <input id="assignTitle" type="text" maxlength="120" autocomplete="off" aria-label="اسم التكليف">
-          <select id="assignDomain" aria-label="مجال التكليف"></select>
-          <button id="addAssignBtn" class="btn" type="submit">إضافة</button>
-        </form>
-        <p class="muted small" style="margin:8px 0 0">يظهر التكليف الجديد لجميع الطلاب على أنه غير مسلَّم.</p>
-      </div>
+      <div id="domainWarn" class="alert" hidden>تعذّر تحميل المجالات. حدّث قواعد Firestore من دليل الإعداد (أضف قسم domains)، ثم أعد تحميل الصفحة.</div>
+      <details class="fold" id="domainFold">
+        <summary><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg></span><span>المجالات</span><span id="domainCount" class="fstate"></span></summary>
+        <div class="fold-body">
+          <p class="muted small" style="margin:0 0 10px">مشتركة بين الأشبال والفتيان. يُعدّ الطالب مكملًا للمجال إذا سلّم تكليفًا واحدًا منه.</p>
+          <form id="addDomainForm" class="row" novalidate>
+            <input id="domainName" type="text" maxlength="120" placeholder="اسم المجال الجديد" autocomplete="off" aria-label="اسم المجال الجديد">
+            <button id="addDomainBtn" class="btn" type="submit">إضافة مجال</button>
+          </form>
+          <div id="domainList"></div>
+        </div>
+      </details>
+      <details class="fold" id="assignFold">
+        <summary><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><span>إضافة تكليف</span></summary>
+        <div class="fold-body">
+          <form id="addAssignForm" class="aform" novalidate>
+            <input id="assignTitle" type="text" maxlength="120" autocomplete="off" aria-label="اسم التكليف">
+            <select id="assignDomain" aria-label="مجال التكليف"></select>
+            <button id="addAssignBtn" class="btn" type="submit">إضافة</button>
+          </form>
+          <p class="muted small" style="margin:8px 0 0">يظهر التكليف الجديد لجميع الطلاب على أنه غير مسلَّم.</p>
+        </div>
+      </details>
       <div class="card">
         <h2>التكاليف الحالية</h2>
         <div id="assignmentList"></div>
@@ -579,6 +637,9 @@ function renderStudents(rows) {
   dsel.innerHTML = `<option value="">كل المجالات</option>` +
     RQ.domainGroups.map(g => `<option value="${esc(g.domain.id)}">لم يسلّم في مجال: ${esc(g.domain.name)}</option>`).join("");
   dsel.value = S.domainFilter;
+  // يظهر على زر «التصفية» حتى وهو مغلق، فلا يُظن أن طلابًا اختفوا
+  $("#filterState").textContent = [S.filter !== "all" ? STATUS_FILTER[S.filter] : "",
+    S.domainFilter ? `لم يسلّم في: ${domainName(S.domainFilter)}` : ""].filter(Boolean).join(" · ");
 
   const q = norm(S.q);
   let list = S.filter === "all" ? rows : rows.filter(r => r.st.status === S.filter);
@@ -674,6 +735,7 @@ function renderAssignments() {
 
 function renderDomains() {
   $("#domainWarn").hidden = S.domainsOk;
+  $("#domainCount").textContent = S.domains.length ? `(${S.domains.length})` : "";
   const box = $("#domainList");
   if (!S.domains.length) { box.innerHTML = `<p class="muted small" style="margin:10px 0 0">لا توجد مجالات بعد.</p>`; return; }
   box.innerHTML = S.domains.map(d => {
