@@ -92,9 +92,37 @@
 
   .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
   .toolbar input{flex:1 1 220px}
-  .filters{display:flex;gap:8px}
-  .filters .btn{background:var(--card);color:var(--tx);border:1px solid var(--line);font-weight:600}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;width:100%}
+  .filters .btn{background:var(--card);color:var(--tx);border:1px solid var(--line);font-weight:600;
+    display:inline-flex;align-items:center;gap:8px;padding:7px 14px;min-height:42px}
   .filters .btn.on{background:var(--g2);color:#fff;border-color:var(--g2)}
+  select{font:inherit;color:inherit;padding:9px 12px;min-height:46px;border:1px solid #cdd4ce;border-radius:12px;background:#fff;max-width:100%}
+  #domainFilter{flex:1 1 100%}
+  .dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;display:inline-block;background:#cfd5d0}
+
+  /* ألوان الحالة */
+  :root{--blue:#1d4ed8;--bluebg:#e3ecff}
+  .dot.s-blue{background:var(--blue)} .dot.s-green{background:var(--ok)} .dot.s-yellow{background:#e0a800}
+  .dot.s-normal{background:#b8c0ba} .dot.s-red{background:var(--red)}
+  .badge.s-blue{background:var(--bluebg);color:var(--blue)}
+  .badge.s-green{background:var(--okbg);color:var(--ok)}
+  .badge.s-yellow{background:var(--warnbg);color:var(--warn)}
+  .badge.s-normal,.badge.s-none{background:#eef0ee;color:var(--mu)}
+  .badge.s-red{background:var(--redbg);color:var(--red)}
+  .stu.s-blue{border-inline-start:6px solid var(--blue)}
+  .stu.s-green{border-inline-start:6px solid var(--ok)}
+  .stu.s-yellow{border-inline-start:6px solid #e0a800}
+  .stu.s-red{border-inline-start:6px solid var(--red)}
+  .stu.s-blue .bar i{background:var(--blue)}
+  .stu.s-yellow .bar i{background:#e0a800}
+  .stu.s-red .bar i{background:var(--red)}
+  .dom-h{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px;padding:6px 10px;
+    background:#f3f5f3;border-radius:10px;font-weight:700}
+  .dom-h small{font-weight:600;white-space:nowrap}
+  .dom-h .yes{color:var(--ok)} .dom-h .no{color:var(--red)}
+  .aform{display:flex;gap:8px;flex-wrap:wrap}
+  .aform input{flex:2 1 200px;min-width:0} .aform select{flex:1 1 140px}
+  .modal-box select{width:100%;margin-bottom:14px}
   .hint{background:var(--warnbg);color:var(--warn);border-radius:12px;padding:10px 14px;margin-bottom:12px}
 
   .stu{background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:10px;overflow:hidden}
@@ -146,8 +174,7 @@
     .top h1{font-size:1.35rem}
     .stats{grid-template-columns:repeat(2,1fr)}
     .stat b{font-size:1.4rem}
-    .filters{width:100%}
-    .filters .btn{flex:1;padding:9px 8px}
+    .filters .btn{flex:1 1 auto;padding:7px 10px;font-size:.92rem}
     .arow{flex-wrap:wrap}
     .arow .btns{width:100%;justify-content:flex-end}
   }
@@ -224,10 +251,8 @@
 
       <div class="toolbar">
         <input id="search" type="search" placeholder="ابحث عن طالب بالاسم" autocomplete="off" aria-label="بحث">
-        <div class="filters">
-          <button class="btn on" type="button" data-filter="all" id="fAll">الكل</button>
-          <button class="btn" type="button" data-filter="incomplete" id="fInc">غير المكتملين</button>
-        </div>
+        <div class="filters" id="filters"></div>
+        <select id="domainFilter" aria-label="تصفية حسب المجال" hidden></select>
       </div>
       <div id="noAssignHint" class="hint" hidden>لا توجد تكاليف بعد — أضفها من «إدارة التكاليف»، وستظهر لكل الطلاب تلقائيًا.</div>
       <div id="studentList"></div>
@@ -235,9 +260,20 @@
 
     <div id="assignmentsTab" hidden>
       <div class="card">
+        <h2>المجالات</h2>
+        <p class="muted small" style="margin:0 0 10px">مشتركة بين الأشبال والفتيان. يُعدّ الطالب مكملًا للمجال إذا سلّم تكليفًا واحدًا منه.</p>
+        <div id="domainWarn" class="alert" hidden>تعذّر تحميل المجالات. حدّث قواعد Firestore من دليل الإعداد (أضف قسم domains)، ثم أعد تحميل الصفحة.</div>
+        <form id="addDomainForm" class="row" novalidate>
+          <input id="domainName" type="text" maxlength="120" placeholder="اسم المجال الجديد" autocomplete="off" aria-label="اسم المجال الجديد">
+          <button id="addDomainBtn" class="btn" type="submit">إضافة مجال</button>
+        </form>
+        <div id="domainList"></div>
+      </div>
+      <div class="card">
         <h2>إضافة تكليف</h2>
-        <form id="addAssignForm" class="row" novalidate>
+        <form id="addAssignForm" class="aform" novalidate>
           <input id="assignTitle" type="text" maxlength="120" autocomplete="off" aria-label="اسم التكليف">
+          <select id="assignDomain" aria-label="مجال التكليف"></select>
           <button id="addAssignBtn" class="btn" type="submit">إضافة</button>
         </form>
         <p class="muted small" style="margin:8px 0 0">يظهر التكليف الجديد لجميع الطلاب على أنه غير مسلَّم.</p>
@@ -259,6 +295,7 @@
     <h3 id="mTitle"></h3>
     <p id="mText"></p>
     <input id="mInput" type="text" maxlength="120" hidden>
+    <select id="mSelect" hidden aria-label="المجال"></select>
     <div class="modal-btns">
       <button id="mOk" class="btn" type="button"></button>
       <button id="mCancel" class="btn secondary" type="button">إلغاء</button>
@@ -308,6 +345,11 @@ service cloud.firestore {
     match /groups/{g}/submissions/{studentId} {
       allow read, write: if okGroup(g);
     }
+    // المجالات مشتركة بين القسمين
+    match /domains/{id} {
+      allow read, delete: if true;
+      allow create, update: if validText('name');
+    }
     // أي مسار آخر مرفوض تلقائيًا
   }
 }`;
@@ -342,13 +384,20 @@ function errMsg(e, fallback) {
 }
 
 // نافذة تأكيد / إدخال بسيطة
-function ask({ title, text = "", ok = "تأكيد", danger = false, value = null }) {
+// select (اختياري): { options: [{value, label}], value } ← تُرجع { text, choice }
+function ask({ title, text = "", ok = "تأكيد", danger = false, value = null, select = null }) {
   return new Promise(resolve => {
-    const modal = $("#modal"), inp = $("#mInput"), okB = $("#mOk"), cancelB = $("#mCancel");
+    const modal = $("#modal"), inp = $("#mInput"), okB = $("#mOk"), cancelB = $("#mCancel"), sel = $("#mSelect");
     const prevFocus = document.activeElement;
     $("#mTitle").textContent = title;
     $("#mText").textContent = text; $("#mText").hidden = !text;
     inp.hidden = value === null; if (value !== null) inp.value = value;
+    sel.hidden = !select;
+    if (select) {
+      sel.innerHTML = select.options.map(o => `<option value="${esc(o.value)}">${esc(o.label)}</option>`).join("");
+      sel.value = select.value;
+    }
+    const result = () => select ? { text: inp.value, choice: sel.value } : (value !== null ? inp.value : true);
     okB.textContent = ok; okB.className = "btn" + (danger ? " danger" : "");
     modal.hidden = false;
     (value !== null ? inp : cancelB).focus();
@@ -358,12 +407,12 @@ function ask({ title, text = "", ok = "تأكيد", danger = false, value = null
       if (prevFocus && prevFocus.focus) prevFocus.focus();
       resolve(r);
     };
-    okB.onclick = () => done(value !== null ? inp.value : true);
+    okB.onclick = () => done(result());
     cancelB.onclick = () => done(null);
     modal.onclick = e => { if (e.target === modal) done(null); };
     modal.onkeydown = e => {
       if (e.key === "Escape") done(null);
-      else if (e.key === "Enter" && value !== null) { e.preventDefault(); done(inp.value); }
+      else if (e.key === "Enter" && e.target === inp) { e.preventDefault(); done(result()); }
     };
   });
 }
@@ -390,10 +439,12 @@ function track(promise) {
 // ---------- الحالة ----------
 const S = {
   students: new Map(),   // id -> {id, name}
-  assignments: [],       // [{id, title, order}] مرتبة
+  assignments: [],       // [{id, title, order, domainId}] مرتبة
+  domains: [],           // [{id, name, order}] مشتركة بين القسمين
+  domainsOk: true,       // false إذا منعت القواعد قراءة المجالات
   done: new Map(),       // studentId -> Set(assignmentId) للتكاليف المسلّمة فقط
-  loaded: { students: false, assignments: false, submissions: false },
-  tab: "students", filter: "all", q: "",
+  loaded: { students: false, assignments: false, submissions: false, domains: false },
+  tab: "students", filter: "all", domainFilter: "", q: "", lastDomain: "",
   open: new Set(),       // الطلاب الذين قائمة تكاليفهم مفتوحة
   pending: new Map(),    // "sid|aid" -> القيمة المطلوبة أثناء الحفظ
   busyIds: new Set(),    // طلاب/تكاليف قيد الحذف
@@ -406,18 +457,57 @@ const col = name => fb.collection(db, "groups", S.group, name);
 const ref = (name, id) => fb.doc(db, "groups", S.group, name, id);
 
 // ---------- الحسابات (مصدرها الوحيد البيانات المحمّلة من القاعدة) ----------
+// المتطلبات: كل مجال فيه تكاليف = متطلب واحد (يكفي تكليف منه)،
+// وكل تكليف بلا مجال = متطلب بذاته. تُبنى على الموجود فقط.
+let RQ = { domainGroups: [], loose: [], reqTotal: 0 };
+function computeReq() {
+  const groups = new Map(S.domains.map(d => [d.id, { domain: d, items: [] }]));
+  const loose = [];
+  for (const a of S.assignments) {
+    const g = a.domainId && groups.get(a.domainId);
+    if (g) g.items.push(a); else loose.push(a);
+  }
+  const domainGroups = [...groups.values()].filter(g => g.items.length);
+  RQ = { domainGroups, loose, reqTotal: domainGroups.length + loose.length };
+}
+
+const EMPTY = new Set();
 function studentStats(sid) {
   const total = S.assignments.length;
-  const set = S.done.get(sid);
+  const set = S.done.get(sid) || EMPTY;
   let done = 0;
-  if (set) for (const a of S.assignments) if (set.has(a.id)) done++;
+  for (const a of S.assignments) if (set.has(a.id)) done++;
+  let domainsDone = 0, looseDone = 0;
+  for (const g of RQ.domainGroups) if (g.items.some(a => set.has(a.id))) domainsDone++;
+  for (const a of RQ.loose) if (set.has(a.id)) looseDone++;
+  const missing = RQ.reqTotal - domainsDone - looseDone;
+  // أزرق: كل التكاليف · أخضر: كل المجالات · أصفر: بقي مجال أو مجالان · عادي: أكثر · أحمر: لا شيء
+  const status = total === 0 ? "none" : done === total ? "blue" : done === 0 ? "red"
+    : missing === 0 ? "green" : missing <= 2 ? "yellow" : "normal";
   return {
-    total, done, remaining: total - done,
+    total, done, remaining: total - done, missing, status,
+    domainsDone, domainsTotal: RQ.domainGroups.length,
     // floor: لا تظهر 100% إلا عند الاكتمال الفعلي
     pct: total ? Math.floor(done * 100 / total) : null,
-    complete: total > 0 && done === total,
+    complete: status === "blue",
   };
 }
+
+const STATUS_ORDER = ["blue", "green", "yellow", "normal", "red"];
+const STATUS_FILTER = { blue: "أكملوا التكاليف", green: "أكملوا المجالات", yellow: "بقي مجال أو مجالان", normal: "غير مكتمل", red: "لم يسلّم" };
+function statusLabel(st) {
+  if (st.status === "yellow") {
+    const unit = st.domainsTotal ? ["بقي مجال واحد", "بقي مجالان"] : ["بقي تكليف واحد", "بقي تكليفان"];
+    return unit[st.missing - 1];
+  }
+  return { none: "لا توجد تكاليف", blue: "أكمل جميع التكاليف", green: "أكمل المجالات", normal: "غير مكتمل", red: "لم يسلّم شيئًا" }[st.status];
+}
+// هل سلّم الطالب أي تكليف من هذا المجال؟
+function coveredDomain(sid, domainId) {
+  const set = S.done.get(sid) || EMPTY;
+  return S.assignments.some(a => a.domainId === domainId && set.has(a.id));
+}
+const domainName = id => (S.domains.find(d => d.id === id) || {}).name || "";
 function overallStats(rows) {
   const n = rows.length, m = S.assignments.length;
   let completed = 0, sum = 0;
@@ -439,7 +529,7 @@ function scheduleRender() {
 }
 
 function render() {
-  const ready = S.loaded.students && S.loaded.assignments && S.loaded.submissions;
+  const ready = S.loaded.students && S.loaded.assignments && S.loaded.submissions && S.loaded.domains;
   $("#loading").hidden = ready || !$("#loadErr").hidden;
   $("#studentsTab").hidden = !ready || S.tab !== "students";
   $("#assignmentsTab").hidden = !ready || S.tab !== "assignments";
@@ -450,9 +540,11 @@ function render() {
   // حفظ التركيز على مربع الاختيار بعد إعادة الرسم
   const fk = document.activeElement && document.activeElement.dataset ? document.activeElement.dataset.key : null;
 
+  computeReq();
   const rows = [...S.students.values()].sort(byName).map(s => ({ s, st: studentStats(s.id) }));
   renderStats(overallStats(rows));
   renderStudents(rows);
+  renderDomains();
   renderAssignments();
   $("#assignTitle").placeholder = `مثال: ${nextAssignTitle()}`;
 
@@ -469,50 +561,77 @@ function renderStats(o) {
 
 function renderStudents(rows) {
   const total = S.assignments.length;
-  const incomplete = rows.filter(r => r.st.total > 0 && !r.st.complete);
-  $("#fAll").textContent = `الكل (${rows.length})`;
-  $("#fInc").textContent = `غير المكتملين (${incomplete.length})`;
-  $("#fAll").classList.toggle("on", S.filter === "all");
-  $("#fInc").classList.toggle("on", S.filter === "incomplete");
   $("#noAssignHint").hidden = total > 0 || rows.length === 0;
 
+  // أزرار التصفية بالألوان مع العدد
+  const counts = { all: rows.length };
+  for (const k of STATUS_ORDER) counts[k] = 0;
+  for (const r of rows) if (counts[r.st.status] !== undefined) counts[r.st.status]++;
+  if (S.filter !== "all" && !STATUS_FILTER[S.filter]) S.filter = "all";
+  $("#filters").innerHTML = [`<button class="btn${S.filter === "all" ? " on" : ""}" type="button" data-filter="all">الكل (${counts.all})</button>`]
+    .concat(STATUS_ORDER.map(k => `<button class="btn${S.filter === k ? " on" : ""}" type="button" data-filter="${k}">
+      <i class="dot s-${k}"></i>${STATUS_FILTER[k]} (${counts[k]})</button>`)).join("");
+
+  // تصفية: لم يسلّم في مجال معيّن (تظهر فقط إن وُجدت مجالات فيها تكاليف)
+  const dsel = $("#domainFilter");
+  if (S.domainFilter && !RQ.domainGroups.some(g => g.domain.id === S.domainFilter)) S.domainFilter = "";
+  dsel.hidden = !RQ.domainGroups.length;
+  dsel.innerHTML = `<option value="">كل المجالات</option>` +
+    RQ.domainGroups.map(g => `<option value="${esc(g.domain.id)}">لم يسلّم في مجال: ${esc(g.domain.name)}</option>`).join("");
+  dsel.value = S.domainFilter;
+
   const q = norm(S.q);
-  let list = S.filter === "incomplete" ? incomplete : rows;
+  let list = S.filter === "all" ? rows : rows.filter(r => r.st.status === S.filter);
+  if (S.domainFilter) list = list.filter(r => !coveredDomain(r.s.id, S.domainFilter));
   if (q) list = list.filter(r => norm(r.s.name).includes(q));
 
   const box = $("#studentList");
   if (!rows.length) { box.innerHTML = `<div class="empty">لا يوجد طلاب بعد. أضف أول طالب من الأعلى.</div>`; return; }
   if (!list.length) {
-    let t = "لا توجد نتائج";
-    if (q) t = `لا يوجد طالب باسم «${esc(S.q.trim())}»${S.filter === "incomplete" ? " ضمن غير المكتملين" : ""}.`;
-    else if (S.filter === "incomplete") t = total ? "جميع الطلاب أكملوا جميع التكاليف." : "لا توجد تكاليف بعد.";
+    const filtered = S.filter !== "all" || S.domainFilter;
+    const t = q ? `لا يوجد طالب باسم «${esc(S.q.trim())}»${filtered ? " ضمن هذا التصنيف" : ""}.`
+      : !total ? "لا توجد تكاليف بعد." : "لا يوجد طلاب في هذا التصنيف.";
     box.innerHTML = `<div class="empty">${t}</div>`;
     return;
   }
   box.innerHTML = list.map(r => studentCard(r.s, r.st)).join("");
 }
 
+function checkItem(s, a, set, deleting) {
+  const key = s.id + "|" + a.id;
+  const pend = S.pending.has(key);
+  const checked = pend ? S.pending.get(key) : set.has(a.id);
+  return `<li><label class="chk"><input type="checkbox" data-key="${esc(key)}" data-sid="${esc(s.id)}" data-aid="${esc(a.id)}"
+    ${checked ? "checked" : ""} ${pend || deleting ? "disabled" : ""}><span>${esc(a.title)}</span>${pend ? "<em>جارٍ الحفظ…</em>" : ""}</label></li>`;
+}
+
 function studentCard(s, st) {
   const open = S.open.has(s.id);
-  const badge = st.total === 0 ? `<span class="badge none">لا توجد تكاليف</span>`
-    : st.complete ? `<span class="badge ok">مكتمل</span>` : `<span class="badge warn">غير مكتمل</span>`;
+  const badge = `<span class="badge s-${st.status}">${statusLabel(st)}</span>`;
   let body = "";
   if (open) {
-    const set = S.done.get(s.id);
+    const set = S.done.get(s.id) || EMPTY;
     const deleting = S.busyIds.has(s.id);
-    const items = S.assignments.map(a => {
-      const key = s.id + "|" + a.id;
-      const pend = S.pending.has(key);
-      const checked = pend ? S.pending.get(key) : !!(set && set.has(a.id));
-      return `<li><label class="chk"><input type="checkbox" data-key="${esc(key)}" data-sid="${esc(s.id)}" data-aid="${esc(a.id)}"
-        ${checked ? "checked" : ""} ${pend || deleting ? "disabled" : ""}><span>${esc(a.title)}</span>${pend ? "<em>جارٍ الحفظ…</em>" : ""}</label></li>`;
-    }).join("");
+    let lists = "";
+    if (!RQ.domainGroups.length) {
+      lists = `<ul class="checks">${S.assignments.map(a => checkItem(s, a, set, deleting)).join("")}</ul>`;
+    } else {
+      // التكاليف مرتبة تحت مجالاتها
+      for (const g of RQ.domainGroups) {
+        const yes = g.items.some(a => set.has(a.id));
+        lists += `<div class="dom-h"><span>${esc(g.domain.name)}</span>
+          <small class="${yes ? "yes" : "no"}">${yes ? "سلّم منه" : "لم يسلّم منه شيئًا"}</small></div>
+          <ul class="checks">${g.items.map(a => checkItem(s, a, set, deleting)).join("")}</ul>`;
+      }
+      if (RQ.loose.length) lists += `<div class="dom-h"><span>بدون مجال</span></div>
+        <ul class="checks">${RQ.loose.map(a => checkItem(s, a, set, deleting)).join("")}</ul>`;
+    }
     body = `<div class="stu-body">
-      ${S.assignments.length ? `<ul class="checks">${items}</ul>` : `<p class="muted">لا توجد تكاليف بعد.</p>`}
+      ${S.assignments.length ? lists : `<p class="muted">لا توجد تكاليف بعد.</p>`}
       <div class="stu-actions"><button class="btn text-danger" type="button" data-act="delStudent" data-id="${esc(s.id)}" ${deleting ? "disabled" : ""}>
         ${deleting ? "جارٍ الحذف…" : "حذف الطالب"}</button></div></div>`;
   }
-  return `<article class="stu${st.complete ? " ok" : ""}">
+  return `<article class="stu s-${st.status}">
     <button class="stu-toggle" type="button" data-act="toggle" data-id="${esc(s.id)}" aria-expanded="${open}">
       <div class="stu-top"><span class="stu-name">${esc(s.name)}</span>${badge}</div>
       <div class="bar"><i style="width:${st.pct || 0}%"></i></div>
@@ -520,22 +639,51 @@ function studentCard(s, st) {
         <span>المسلّمة: <b>${st.done}</b> من <b>${st.total}</b></span>
         <span>المتبقية: <b>${st.remaining}</b></span>
         <span>الإنجاز: <b dir="ltr">${pctText(st.pct)}</b></span>
+        ${st.domainsTotal ? `<span>المجالات: <b>${st.domainsDone}</b> من <b>${st.domainsTotal}</b></span>` : ""}
       </div>
       <div class="chev">${open ? "إخفاء التكاليف ▴" : "عرض التكاليف ▾"}</div>
     </button>${body}</article>`;
 }
 
 function renderAssignments() {
+  // قائمة اختيار المجال في نموذج الإضافة (تحتفظ بآخر اختيار)
+  const sel = $("#assignDomain");
+  if (S.lastDomain && !S.domains.some(d => d.id === S.lastDomain)) S.lastDomain = "";
+  sel.innerHTML = S.domains.map(d => `<option value="${esc(d.id)}">${esc(d.name)}</option>`).join("") + `<option value="">بدون مجال</option>`;
+  sel.value = S.lastDomain || (S.domains[0] ? S.domains[0].id : "");
+
   const box = $("#assignmentList");
   if (!S.assignments.length) { box.innerHTML = `<div class="empty">لا توجد تكاليف بعد.</div>`; return; }
   const n = S.students.size;
-  box.innerHTML = S.assignments.map((a, i) => {
+  let i = 0;
+  const row = a => {
     const b = S.busyIds.has(a.id);
     return `<div class="arow">
-      <div><div class="t">${i + 1}. ${esc(a.title)}</div><small>المسلِّمون: ${submittedCount(a.id)} من ${n}</small></div>
+      <div><div class="t">${++i}. ${esc(a.title)}</div><small>المسلِّمون: ${submittedCount(a.id)} من ${n}</small></div>
       <div class="btns">
         <button class="btn secondary" type="button" data-act="rename" data-id="${esc(a.id)}" ${b ? "disabled" : ""}>تعديل</button>
         <button class="btn text-danger" type="button" data-act="delAssign" data-id="${esc(a.id)}" ${b ? "disabled" : ""}>${b ? "جارٍ الحذف…" : "حذف"}</button>
+      </div></div>`;
+  };
+  if (!RQ.domainGroups.length) { box.innerHTML = S.assignments.map(row).join(""); return; }
+  let html = "";
+  for (const g of RQ.domainGroups) html += `<div class="dom-h"><span>${esc(g.domain.name)}</span><small>${g.items.length} تكليف</small></div>` + g.items.map(row).join("");
+  if (RQ.loose.length) html += `<div class="dom-h"><span>بدون مجال</span><small>كل تكليف هنا مطلوب بذاته</small></div>` + RQ.loose.map(row).join("");
+  box.innerHTML = html;
+}
+
+function renderDomains() {
+  $("#domainWarn").hidden = S.domainsOk;
+  const box = $("#domainList");
+  if (!S.domains.length) { box.innerHTML = `<p class="muted small" style="margin:10px 0 0">لا توجد مجالات بعد.</p>`; return; }
+  box.innerHTML = S.domains.map(d => {
+    const used = S.assignments.filter(a => a.domainId === d.id).length;
+    const b = S.busyIds.has(d.id);
+    return `<div class="arow">
+      <div><div class="t">${esc(d.name)}</div><small>تكاليفه في هذا القسم: ${used}</small></div>
+      <div class="btns">
+        <button class="btn secondary" type="button" data-act="renameDomain" data-id="${esc(d.id)}" ${b ? "disabled" : ""}>تعديل</button>
+        <button class="btn text-danger" type="button" data-act="delDomain" data-id="${esc(d.id)}" ${b ? "disabled" : ""}>${b ? "جارٍ…" : "حذف"}</button>
       </div></div>`;
   }).join("");
 }
@@ -563,10 +711,19 @@ function startListeners() {
   unsubs.push(fb.onSnapshot(col("assignments"), snap => {
     S.assignments = snap.docs.map(d => {
       const x = d.data();
-      return { id: d.id, title: cleanText(x.title) || "(بدون اسم)", order: typeof x.order === "number" ? x.order : 0 };
+      return { id: d.id, title: cleanText(x.title) || "(بدون اسم)", order: typeof x.order === "number" ? x.order : 0,
+        domainId: typeof x.domainId === "string" ? x.domainId : "" };
     }).sort((a, b) => a.order - b.order || a.title.localeCompare(b.title, "ar"));
     S.loaded.assignments = true; scheduleRender();
   }, onErr));
+  // المجالات مشتركة؛ إن تعذّر تحميلها يعمل الموقع بدونها (كل تكليف يُحسب بذاته)
+  unsubs.push(fb.onSnapshot(fb.collection(db, "domains"), snap => {
+    S.domains = snap.docs.map(d => {
+      const x = d.data();
+      return { id: d.id, name: cleanText(x.name) || "(بدون اسم)", order: typeof x.order === "number" ? x.order : 0 };
+    }).sort((a, b) => a.order - b.order || a.name.localeCompare(b.name, "ar"));
+    S.domainsOk = true; S.loaded.domains = true; scheduleRender();
+  }, () => { S.domains = []; S.domainsOk = false; S.loaded.domains = true; scheduleRender(); }));
   unsubs.push(fb.onSnapshot(col("submissions"), snap => {
     S.done = new Map(snap.docs.map(d => {
       const m = d.data().done || {};
@@ -578,7 +735,7 @@ function startListeners() {
 function stopListeners() {
   unsubs.forEach(u => { try { u(); } catch (_) {} });
   unsubs = [];
-  S.loaded = { students: false, assignments: false, submissions: false };
+  S.loaded = { students: false, assignments: false, submissions: false, domains: false };
 }
 
 // ---------- العمليات ----------
@@ -682,33 +839,104 @@ async function onAddAssignment(e) {
   const inp = $("#assignTitle");
   const title = cleanText(inp.value) || nextAssignTitle();
   if (S.assignments.some(a => norm(a.title) === norm(title))) { toast(`يوجد تكليف باسم «${title}».`, "err", 3000); return; }
+  const domainId = $("#assignDomain").value;
   await busy($("#addAssignBtn"), async () => {
     if (!canWrite()) return;
     const order = S.assignments.reduce((m, a) => Math.max(m, a.order), 0) + 1;
+    const data = { title, order, createdAt: fb.serverTimestamp() };
+    if (domainId) data.domainId = domainId;
     try {
-      await track(fb.setDoc(fb.doc(col("assignments")), { title, order, createdAt: fb.serverTimestamp() }));
+      await track(fb.setDoc(fb.doc(col("assignments")), data));
       inp.value = "";
-      toast(`تمت إضافة «${title}»`);
+      S.lastDomain = domainId;
+      toast(`تمت إضافة «${title}»` + (domainId ? ` في مجال «${domainName(domainId)}»` : ""));
     } catch (err) { toast(errMsg(err, "تعذّرت إضافة التكليف."), "err", 4000); }
   });
 }
 
+const domainOptions = () => S.domains.map(d => ({ value: d.id, label: d.name })).concat([{ value: "", label: "بدون مجال" }]);
+
 async function onRenameAssignment(btn, aid) {
   const a = S.assignments.find(x => x.id === aid);
   if (!a) return;
-  const v = await ask({ title: "تعديل اسم التكليف", value: a.title, ok: "حفظ" });
+  const curDomain = S.domains.some(d => d.id === a.domainId) ? a.domainId : "";
+  const v = await ask({ title: "تعديل التكليف", value: a.title, ok: "حفظ",
+    select: S.domains.length ? { options: domainOptions(), value: curDomain } : null });
   if (v === null) return;
-  const title = cleanText(v);
+  const title = cleanText(typeof v === "string" ? v : v.text);
+  const domainId = typeof v === "string" ? curDomain : v.choice;
   if (!title) { toast("اسم التكليف لا يمكن أن يكون فارغًا.", "err"); return; }
-  if (title === a.title) return;
+  if (title === a.title && domainId === curDomain) return;
   if (S.assignments.some(x => x.id !== aid && norm(x.title) === norm(title))) { toast(`يوجد تكليف باسم «${title}».`, "err", 3000); return; }
   if (!canWrite()) return;
   await busy(btn, async () => {
     try {
-      await track(fb.setDoc(ref("assignments", aid), { title }, { merge: true }));
-      toast("تم حفظ الاسم الجديد");
+      // نفس معرّف التكليف ← التسليمات المسجّلة له تبقى كما هي
+      await track(fb.setDoc(ref("assignments", aid), { title, domainId: domainId || fb.deleteField() }, { merge: true }));
+      toast("تم حفظ التعديل");
     } catch (err) { toast(errMsg(err, "تعذّر تعديل التكليف."), "err", 4000); }
   });
+}
+
+// ---------- المجالات (مشتركة بين القسمين) ----------
+const domainErr = (e, fallback) => String(e && e.code || "").includes("permission-denied")
+  ? "قواعد Firestore لا تسمح بالمجالات بعد. حدّثها من دليل الإعداد." : errMsg(e, fallback);
+
+async function onAddDomain(e) {
+  e.preventDefault();
+  const inp = $("#domainName");
+  const name = cleanText(inp.value);
+  if (!name) { toast("اكتب اسم المجال أولًا.", "err"); inp.focus(); return; }
+  if (S.domains.some(d => norm(d.name) === norm(name))) { toast(`يوجد مجال باسم «${name}».`, "err", 3000); return; }
+  await busy($("#addDomainBtn"), async () => {
+    if (!canWrite()) return;
+    const order = S.domains.reduce((m, d) => Math.max(m, d.order), 0) + 1;
+    try {
+      await track(fb.setDoc(fb.doc(fb.collection(db, "domains")), { name, order, createdAt: fb.serverTimestamp() }));
+      inp.value = "";
+      toast(`تمت إضافة مجال «${name}»`);
+    } catch (err) { toast(domainErr(err, "تعذّرت إضافة المجال."), "err", 4500); }
+  });
+  inp.focus();
+}
+
+async function onRenameDomain(btn, id) {
+  const d = S.domains.find(x => x.id === id);
+  if (!d) return;
+  const v = await ask({ title: "تعديل اسم المجال", text: "يتغير الاسم في قسمي الأشبال والفتيان.", value: d.name, ok: "حفظ" });
+  if (v === null) return;
+  const name = cleanText(v);
+  if (!name) { toast("اسم المجال لا يمكن أن يكون فارغًا.", "err"); return; }
+  if (name === d.name) return;
+  if (S.domains.some(x => x.id !== id && norm(x.name) === norm(name))) { toast(`يوجد مجال باسم «${name}».`, "err", 3000); return; }
+  if (!canWrite()) return;
+  await busy(btn, async () => {
+    try {
+      await track(fb.setDoc(fb.doc(db, "domains", id), { name }, { merge: true }));
+      toast("تم حفظ الاسم الجديد");
+    } catch (err) { toast(domainErr(err, "تعذّر تعديل المجال."), "err", 4500); }
+  });
+}
+
+async function onDeleteDomain(btn, id) {
+  const d = S.domains.find(x => x.id === id);
+  if (!d || S.busyIds.has(id)) return;
+  // لا يُحذف مجال فيه تكاليف (في هذا القسم أو القسم الآخر) حتى لا يتغير تصنيفها دون علمك
+  const here = S.assignments.filter(a => a.domainId === id).length;
+  if (here) { toast(`في هذا المجال ${here} تكليف. انقلها لمجال آخر أو احذفها أولًا.`, "err", 4500); return; }
+  if (!canWrite()) return;
+  S.busyIds.add(id); scheduleRender();
+  try {
+    const other = Object.keys(GROUPS).find(g => g !== S.group);
+    const snap = await fb.getDocs(fb.query(fb.collection(db, "groups", other, "assignments"), fb.where("domainId", "==", id), fb.limit(1)));
+    if (!snap.empty) { toast(`هذا المجال مستخدم في قسم ${GROUPS[other]}. انقل تكاليفه هناك أولًا.`, "err", 4500); return; }
+    const ok = await ask({ title: "حذف مجال", danger: true, ok: "حذف",
+      text: `سيُحذف مجال «${d.name}» من قسمي الأشبال والفتيان. لا توجد فيه تكاليف.` });
+    if (!ok || !canWrite()) return;
+    await track(fb.deleteDoc(fb.doc(db, "domains", id)));
+    toast(`تم حذف مجال «${d.name}»`);
+  } catch (err) { toast(domainErr(err, "تعذّر حذف المجال."), "err", 4500); }
+  finally { S.busyIds.delete(id); scheduleRender(); }
 }
 
 async function onDeleteAssignment(btn, aid) {
@@ -762,7 +990,7 @@ function leaveGroup() {
   S.group = null;
   S.students = new Map(); S.assignments = []; S.done = new Map();
   S.open.clear(); S.pending.clear(); S.busyIds.clear(); S.q = ""; $("#search").value = "";
-  S.tab = "students"; S.filter = "all";
+  S.tab = "students"; S.filter = "all"; S.domainFilter = "";
   $("#studentList").innerHTML = $("#assignmentList").innerHTML = $("#stats").innerHTML = "";
   try { localStorage.removeItem(GROUP_KEY); } catch (_) {}
   document.title = "متابعة تكاليف الطلاب";
@@ -787,7 +1015,19 @@ $("#bulkBtn").addEventListener("click", onBulkAdd);
 $("#addAssignForm").addEventListener("submit", onAddAssignment);
 $("#search").addEventListener("input", e => { S.q = e.target.value; scheduleRender(); });
 document.querySelectorAll(".tab").forEach(b => b.addEventListener("click", () => { S.tab = b.dataset.tab; render(); }));
-document.querySelectorAll("[data-filter]").forEach(b => b.addEventListener("click", () => { S.filter = b.dataset.filter; render(); }));
+$("#filters").addEventListener("click", e => {
+  const b = e.target.closest("[data-filter]");
+  if (b) { S.filter = b.dataset.filter; render(); }
+});
+$("#domainFilter").addEventListener("change", e => { S.domainFilter = e.target.value; render(); });
+$("#assignDomain").addEventListener("change", e => { S.lastDomain = e.target.value; });
+$("#addDomainForm").addEventListener("submit", onAddDomain);
+$("#domainList").addEventListener("click", e => {
+  const t = e.target.closest("[data-act]");
+  if (!t) return;
+  if (t.dataset.act === "renameDomain") onRenameDomain(t, t.dataset.id);
+  else if (t.dataset.act === "delDomain") onDeleteDomain(t, t.dataset.id);
+});
 
 $("#studentList").addEventListener("click", e => {
   const t = e.target.closest("[data-act]");
