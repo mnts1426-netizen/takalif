@@ -212,10 +212,87 @@
   .modal-btns{display:flex;gap:8px}
   .modal-btns .btn{flex:1}
 
+  /* التسجيل */
+  .seg{display:flex;gap:4px;background:#e4ebf2;padding:3px;border-radius:10px;margin-bottom:10px}
+  .seg button{flex:1;font:inherit;font-size:.86rem;font-weight:600;border:0;background:transparent;color:var(--mu);
+    border-radius:8px;padding:5px 8px;min-height:34px;cursor:pointer}
+  .seg button.on{background:#fff;color:var(--g);box-shadow:0 1px 3px rgba(16,24,40,.1)}
+  .rec-tools{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:2px 0 4px}
+  .rec-tools .btn{min-height:32px;padding:3px 12px;font-size:.82rem}
+  .sw{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;color:var(--mu);cursor:pointer;margin-inline-end:auto}
+  .sw input{width:18px;height:18px;accent-color:var(--g2);margin:0}
+  .info{font-size:.82rem;color:var(--mu);margin:6px 0}
+  .info b{color:var(--tx);font-weight:600}
+  .chk.chg{background:#fff7e3;border-radius:8px;padding-inline:8px}
+  .chk em.t-add{color:var(--ok);font-weight:600}
+  .chk em.t-del{color:var(--red);font-weight:600}
+  li.empty{list-style:none}
+  .savebar{position:sticky;bottom:10px;z-index:20;display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);
+    border-radius:12px;padding:8px 10px;box-shadow:0 8px 24px rgba(16,24,40,.14);margin-top:10px}
+  .savebar span{flex:1;font-size:.85rem;font-weight:600}
+  .pick{display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;font:inherit;text-align:inherit;background:none;
+    border:0;border-bottom:1px solid var(--line);padding:8px 4px;min-height:44px;cursor:pointer;color:inherit}
+  .pick:last-child{border-bottom:0}
+  .pick:hover{background:#f8fafc}
+  .pick span:first-child{font-weight:500;font-size:.94rem;overflow-wrap:anywhere}
+  .stu-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+  .stu-head .stu-name{font-size:1rem}
+  .stu-head .btn{min-height:32px;padding:3px 12px;font-size:.82rem;flex-shrink:0}
+
+  /* المتابعة */
+  .summary{margin-bottom:6px}
+  .overall{font-size:.8rem;color:var(--mu);margin:0}
+  .overall b{color:var(--tx)}
+  .nums .chev{margin:0;margin-inline-start:auto}
+  .ro{display:flex;align-items:center;gap:10px;padding:5px 2px;font-size:.9rem;color:var(--mu)}
+  .ro i{width:18px;height:18px;border-radius:50%;border:2px solid #c9d3dc;flex-shrink:0;display:inline-flex;align-items:center;
+    justify-content:center;font-style:normal;font-size:11px;font-weight:700;color:#fff}
+  .ro.yes{color:var(--tx)}
+  .ro.yes i{background:var(--ok);border-color:var(--ok)}
+  .ro.yes i::after{content:"✓"}
+
+  /* أزرار الترويسة: مفتاح القسم + القائمة ⋮ */
+  .top-actions{position:relative;display:flex;align-items:center;gap:6px;flex-shrink:0}
+  .menu-btn{width:36px;height:36px;border-radius:10px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.13);
+    color:#fff;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+  .menu-btn:hover{background:rgba(255,255,255,.22)}
+  .menu-btn svg{width:18px;height:18px}
+  .menu{position:absolute;top:calc(100% + 6px);inset-inline-end:0;z-index:35;background:#fff;border:1px solid var(--line);border-radius:12px;
+    box-shadow:0 12px 30px rgba(16,24,40,.18);padding:4px;min-width:160px}
+  .menu button{display:flex;align-items:center;gap:10px;width:100%;font:inherit;font-size:.92rem;font-weight:600;color:var(--tx);
+    background:none;border:0;border-radius:8px;padding:9px 12px;cursor:pointer;text-align:inherit}
+  .menu button:hover{background:var(--gl)}
+  .menu svg{width:17px;height:17px;color:var(--g2)}
+  .pagebar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+  .pagebar .back{font:inherit;font-size:.86rem;font-weight:600;color:var(--g2);background:var(--gl);border:0;border-radius:10px;
+    padding:6px 12px;min-height:36px;cursor:pointer}
+  .pagebar .back:hover{background:var(--gl2)}
+  .pagebar b{font-size:1.05rem}
+
+  /* مفتاح القسم في الترويسة */
+  .gswitch{display:inline-flex;gap:2px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:10px;padding:2px;flex-shrink:0}
+  .gswitch button{font:inherit;font-size:.82rem;font-weight:600;border:0;background:transparent;color:#fff;border-radius:8px;
+    padding:3px 10px;min-height:30px;cursor:pointer}
+  .gswitch button.on{background:#fff;color:var(--g)}
+
+  /* الأدوات */
+  .tool{padding:10px 0;border-bottom:1px solid var(--line)}
+  .tool:last-child{border-bottom:0}
+  .tool h3{margin:0 0 6px;font-size:.92rem}
+  .tool .row select{flex:1;min-width:0}
+  .note{font-size:.8rem;color:var(--mu);margin:6px 0 0}
+  textarea.out{min-height:140px;margin-top:8px;font-size:14px}
+
   @media (max-width:640px){
     .top h1{font-size:1.08rem}
     .top .sub{font-size:.8rem}
     .brand img{width:38px;height:38px}
+  }
+  /* الجوال: الترويسة سطر واحد (المفتاح يوضّح القسم) */
+  @media (max-width:480px){
+    .top{padding:12px 0}
+    body.in-app .brand img, body.in-app .top .sub{display:none}
+    body.in-app .top h1{font-size:1rem;white-space:nowrap}
     .stats{grid-template-columns:repeat(2,1fr)}
     .stat b{font-size:1.25rem}
     .arow .btns .btn{padding:3px 9px}
@@ -233,7 +310,19 @@
         <p class="sub" id="subTitle">إدارة الطلاب والتكاليف ومتابعة التسليم من مكان واحد</p>
       </div>
     </div>
-    <button id="switchBtn" class="btn" type="button" hidden>تغيير القسم</button>
+    <div class="top-actions" id="topActions" hidden>
+      <div class="gswitch" id="gSwitch">
+        <button type="button" data-g="ashbal">الأشبال</button>
+        <button type="button" data-g="fityan">الفتيان</button>
+      </div>
+      <button class="menu-btn" type="button" id="menuBtn" aria-label="القائمة" aria-haspopup="true" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+      </button>
+      <div class="menu" id="menu" role="menu" hidden>
+        <button type="button" role="menuitem" data-go="follow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>المتابعة</button>
+        <button type="button" role="menuitem" data-go="admin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/></svg>الإدارة</button>
+      </div>
+    </div>
   </div>
 </header>
 <div id="netBar" class="netbar" hidden>لا يوجد اتصال بالإنترنت — لن تُحفظ أي تغييرات حتى يعود الاتصال.</div>
@@ -269,20 +358,81 @@
   </section>
 
   <section id="appView" hidden>
-    <nav class="tabs">
-      <button class="tab active" type="button" data-tab="students">الطلاب والمتابعة</button>
-      <button class="tab" type="button" data-tab="assignments" id="tabAssignBtn">إدارة التكاليف</button>
-    </nav>
+    <!-- شريط الرجوع: يظهر فقط في صفحتي المتابعة والإدارة -->
+    <div class="pagebar" id="pageBar" hidden>
+      <button class="back" type="button" id="backBtn">→ رجوع إلى التسجيل</button>
+      <b id="pageTitle"></b>
+    </div>
 
     <div id="loadErr" class="alert" hidden><div id="loadErrText"></div>
       <button id="retryBtn" class="btn danger" type="button">إعادة المحاولة</button></div>
     <p id="loading" class="muted center">جارٍ تحميل البيانات…</p>
+    <div id="noAssignHint" class="hint" hidden>لا توجد تكاليف بعد — أضفها من القائمة ⋮ ثم «الإدارة»، وستظهر لكل الطلاب تلقائيًا.</div>
 
-    <div id="studentsTab" hidden>
-      <div class="stats" id="stats"></div>
+    <!-- التسجيل: العمل اليومي -->
+    <div id="recordTab" hidden>
+      <div class="seg" id="recModeSeg">
+        <button type="button" data-mode="assign" class="on">حسب التكليف</button>
+        <button type="button" data-mode="student">حسب الطالب</button>
+      </div>
 
-      <details class="fold" id="addFold">
-        <summary><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg></span><span>إضافة طلاب</span></summary>
+      <div class="card" id="recAssign">
+        <select id="recAssignSel" aria-label="اختر التكليف"></select>
+        <p class="info" id="recAssignInfo"></p>
+        <div class="toolbar">
+          <input id="recSearch" type="search" placeholder="ابحث عن طالب" autocomplete="off" aria-label="بحث عن طالب">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        </div>
+        <div class="rec-tools">
+          <label class="sw"><input type="checkbox" id="recOnlyMissing">من لم يسلّم فقط</label>
+          <button class="btn secondary" type="button" id="recAll">تحديد الكل</button>
+          <button class="btn secondary" type="button" id="recNone">إلغاء التحديد</button>
+        </div>
+        <ul class="checks" id="recList"></ul>
+      </div>
+
+      <div class="card" id="recStudent" hidden>
+        <div id="recStuPick">
+          <div class="toolbar">
+            <input id="recStuSearch" type="search" placeholder="ابحث عن الطالب" autocomplete="off" aria-label="ابحث عن الطالب">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          </div>
+          <div id="recStuList"></div>
+        </div>
+        <div id="recStuView" hidden>
+          <div class="stu-head">
+            <div><div class="stu-name" id="recStuName"></div><div class="info" id="recStuInfo"></div></div>
+            <button class="btn secondary" type="button" id="recStuChange">تغيير الطالب</button>
+          </div>
+          <div id="recStuChecks"></div>
+        </div>
+      </div>
+
+      <div class="savebar" id="saveBar" hidden>
+        <span id="saveInfo"></span>
+        <button class="btn secondary" type="button" id="draftUndo">تراجع</button>
+        <button class="btn" type="button" id="draftSave">حفظ</button>
+      </div>
+    </div>
+
+    <!-- المتابعة -->
+    <div id="followTab" hidden>
+      <div class="filters summary" id="filters"></div>
+      <p class="overall" id="overall"></p>
+      <select id="domainFilter" aria-label="تصفية حسب المجال" hidden></select>
+      <div class="toolbar" style="margin-top:10px">
+        <input id="search" type="search" placeholder="ابحث عن طالب بالاسم" autocomplete="off" aria-label="بحث">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      </div>
+      <div id="studentList"></div>
+    </div>
+
+    <!-- الإدارة: أعمال نادرة -->
+    <div id="adminTab" hidden>
+      <div id="domainWarn" class="alert" hidden>تعذّر تحميل المجالات. حدّث قواعد Firestore من دليل الإعداد (أضف قسم domains)، ثم أعد تحميل الصفحة.</div>
+
+      <details class="fold" id="stuFold">
+        <summary><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg></span><span>الطلاب</span><span id="stuCount" class="fstate"></span></summary>
         <div class="fold-body">
           <form id="addStudentForm" class="row" novalidate>
             <input id="studentName" type="text" maxlength="120" placeholder="اسم الطالب الجديد" autocomplete="off" aria-label="اسم الطالب الجديد">
@@ -294,26 +444,27 @@
             <p class="muted small">الأسماء المكررة أو الموجودة مسبقًا تُتجاهل تلقائيًا.</p>
             <button id="bulkBtn" class="btn" type="button">إضافة القائمة</button>
           </details>
+          <div class="toolbar" style="margin-top:12px">
+            <input id="adminStuSearch" type="search" placeholder="ابحث في الطلاب" autocomplete="off" aria-label="ابحث في الطلاب">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          </div>
+          <div id="adminStuList"></div>
         </div>
       </details>
 
-      <div class="toolbar">
-        <input id="search" type="search" placeholder="ابحث عن طالب بالاسم" autocomplete="off" aria-label="بحث">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-      </div>
-      <details class="fold" id="filterFold">
-        <summary><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18l-7 8.5V19l-4 2v-7.5z"/></svg></span><span>التصفية</span><span id="filterState" class="fstate"></span></summary>
+      <details class="fold" id="assignFold">
+        <summary><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 3h6v3H9zM9 11h6M9 15h4"/></svg></span><span>التكاليف</span><span id="assignCount" class="fstate"></span></summary>
         <div class="fold-body">
-          <div class="filters" id="filters"></div>
-          <select id="domainFilter" aria-label="تصفية حسب المجال" hidden></select>
+          <form id="addAssignForm" class="aform" novalidate>
+            <input id="assignTitle" type="text" maxlength="120" autocomplete="off" aria-label="اسم التكليف">
+            <select id="assignDomain" aria-label="مجال التكليف"></select>
+            <button id="addAssignBtn" class="btn" type="submit">إضافة</button>
+          </form>
+          <p class="muted small" style="margin:8px 0 6px">يظهر التكليف الجديد لجميع الطلاب على أنه غير مسلَّم.</p>
+          <div id="assignmentList"></div>
         </div>
       </details>
-      <div id="noAssignHint" class="hint" hidden>لا توجد تكاليف بعد — أضفها من «إدارة التكاليف»، وستظهر لكل الطلاب تلقائيًا.</div>
-      <div id="studentList"></div>
-    </div>
 
-    <div id="assignmentsTab" hidden>
-      <div id="domainWarn" class="alert" hidden>تعذّر تحميل المجالات. حدّث قواعد Firestore من دليل الإعداد (أضف قسم domains)، ثم أعد تحميل الصفحة.</div>
       <details class="fold" id="domainFold">
         <summary><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg></span><span>المجالات</span><span id="domainCount" class="fstate"></span></summary>
         <div class="fold-body">
@@ -325,21 +476,28 @@
           <div id="domainList"></div>
         </div>
       </details>
-      <details class="fold" id="assignFold">
-        <summary><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><span>إضافة تكليف</span></summary>
+
+      <details class="fold" id="toolsFold">
+        <summary><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/></svg></span><span>أدوات</span></summary>
         <div class="fold-body">
-          <form id="addAssignForm" class="aform" novalidate>
-            <input id="assignTitle" type="text" maxlength="120" autocomplete="off" aria-label="اسم التكليف">
-            <select id="assignDomain" aria-label="مجال التكليف"></select>
-            <button id="addAssignBtn" class="btn" type="submit">إضافة</button>
-          </form>
-          <p class="muted small" style="margin:8px 0 0">يظهر التكليف الجديد لجميع الطلاب على أنه غير مسلَّم.</p>
+          <div class="tool">
+            <h3>ترتيب قائمة المتابعة</h3>
+            <select id="sortSel" aria-label="ترتيب قائمة المتابعة">
+              <option value="name">بالاسم</option>
+              <option value="late">الأكثر تأخرًا أولًا</option>
+            </select>
+            <p class="note">يُحفظ هذا الاختيار على هذا الجهاز فقط.</p>
+          </div>
+          <div class="tool">
+            <h3>نسخ أسماء من لم يسلّم تكليفًا</h3>
+            <div class="row">
+              <select id="copySel" aria-label="التكليف"></select>
+              <button class="btn" type="button" id="copyBtn">نسخ</button>
+            </div>
+            <textarea id="copyOut" class="out" readonly hidden aria-label="الأسماء المنسوخة"></textarea>
+          </div>
         </div>
       </details>
-      <div class="card">
-        <h2>التكاليف الحالية</h2>
-        <div id="assignmentList"></div>
-      </div>
     </div>
   </section>
 </main>
@@ -495,6 +653,9 @@ function track(promise) {
 }
 
 // ---------- الحالة ----------
+const SORT_KEY = "takaleef_sort";
+let savedSort = "name";
+try { savedSort = localStorage.getItem(SORT_KEY) === "late" ? "late" : "name"; } catch (_) {}
 const S = {
   students: new Map(),   // id -> {id, name}
   assignments: [],       // [{id, title, order, domainId}] مرتبة
@@ -502,10 +663,14 @@ const S = {
   domainsOk: true,       // false إذا منعت القواعد قراءة المجالات
   done: new Map(),       // studentId -> Set(assignmentId) للتكاليف المسلّمة فقط
   loaded: { students: false, assignments: false, submissions: false, domains: false },
-  tab: "students", filter: "all", domainFilter: "", q: "", lastDomain: "",
-  open: new Set(),       // الطلاب الذين قائمة تكاليفهم مفتوحة
-  pending: new Map(),    // "sid|aid" -> القيمة المطلوبة أثناء الحفظ
-  busyIds: new Set(),    // طلاب/تكاليف قيد الحذف
+  tab: "record",         // record | follow | admin
+  filter: "all", domainFilter: "", q: "", lastDomain: "",
+  rec: { mode: "assign", aid: "", sid: "", q: "", onlyMissing: false, stuQ: "" },
+  draft: new Map(),      // "sid|aid" -> القيمة المطلوبة (لم تُحفظ بعد)
+  saving: false,
+  open: new Set(),       // بطاقات المتابعة المفتوحة
+  busyIds: new Set(),    // طلاب/تكاليف/مجالات قيد الحذف
+  adminQ: "", sort: savedSort, copyAid: "",
   group: null,           // ashbal | fityan
 };
 
@@ -586,42 +751,146 @@ function scheduleRender() {
   setTimeout(() => { renderQueued = false; render(); }, 0);
 }
 
+const TABS = ["record", "follow", "admin"];
+const isDone = (sid, aid) => (S.done.get(sid) || EMPTY).has(aid);
+const dkey = (sid, aid) => sid + "|" + aid;
+// المسودة تحتفظ فقط بما يختلف عن المحفوظ فعلًا، ولا يُحفظ شيء قبل ضغط «حفظ»
+function setDraft(sid, aid, val) {
+  const k = dkey(sid, aid);
+  if (val === isDone(sid, aid)) S.draft.delete(k); else S.draft.set(k, val);
+}
+function pruneDraft() {
+  const aids = new Set(S.assignments.map(a => a.id));
+  for (const [k, v] of S.draft) {
+    const [sid, aid] = k.split("|");
+    if (!S.students.has(sid) || !aids.has(aid) || v === isDone(sid, aid)) S.draft.delete(k);
+  }
+}
+function sortRows(rows) {
+  if (S.sort !== "late") return rows;
+  return rows.slice().sort((a, b) => b.st.missing - a.st.missing || a.st.done - b.st.done || byName(a.s, b.s));
+}
+// خيارات التكاليف مجمّعة تحت مجالاتها
+function assignOptions(labelFn) {
+  const opt = a => `<option value="${esc(a.id)}">${esc(labelFn(a))}</option>`;
+  if (!RQ.domainGroups.length) return S.assignments.map(opt).join("");
+  return RQ.domainGroups.map(g => `<optgroup label="${esc(g.domain.name)}">${g.items.map(opt).join("")}</optgroup>`).join("")
+    + (RQ.loose.length ? `<optgroup label="بدون مجال">${RQ.loose.map(opt).join("")}</optgroup>` : "");
+}
+// لا يُعاد بناء القائمة المنسدلة إلا إذا تغيّر محتواها
+function setHtml(el, html) { if (el._h !== html) { el.innerHTML = html; el._h = html; } }
+// التكاليف تحت عناوين مجالاتها
+function groupedHtml(itemFn, headExtra = () => "") {
+  if (!RQ.domainGroups.length) return `<ul class="checks">${S.assignments.map(itemFn).join("")}</ul>`;
+  let h = "";
+  for (const g of RQ.domainGroups)
+    h += `<div class="dom-h"><span>${esc(g.domain.name)}</span>${headExtra(g)}</div><ul class="checks">${g.items.map(itemFn).join("")}</ul>`;
+  if (RQ.loose.length) h += `<div class="dom-h"><span>بدون مجال</span></div><ul class="checks">${RQ.loose.map(itemFn).join("")}</ul>`;
+  return h;
+}
+const domainHead = sid => g => {
+  const yes = g.items.some(a => isDone(sid, a.id));
+  return `<small class="${yes ? "yes" : "no"}">${yes ? "سلّم منه" : "لم يسلّم منه شيئًا"}</small>`;
+};
+
 function render() {
   const ready = S.loaded.students && S.loaded.assignments && S.loaded.submissions && S.loaded.domains;
   $("#loading").hidden = ready || !$("#loadErr").hidden;
-  $("#studentsTab").hidden = !ready || S.tab !== "students";
-  $("#assignmentsTab").hidden = !ready || S.tab !== "assignments";
-  document.querySelectorAll(".tab").forEach(b => b.classList.toggle("active", b.dataset.tab === S.tab));
-  $("#tabAssignBtn").textContent = `إدارة التكاليف (${S.assignments.length})`;
-  if (!ready) return;
+  for (const t of TABS) $(`#${t}Tab`).hidden = !ready || S.tab !== t;
+  // التسجيل هو الشاشة الرئيسية؛ المتابعة والإدارة صفحتان فرعيتان من القائمة ⋮
+  $("#pageBar").hidden = S.tab === "record";
+  $("#pageTitle").textContent = { follow: "المتابعة", admin: "الإدارة" }[S.tab] || "";
+  $("#backBtn").textContent = "→ رجوع إلى التسجيل" + (S.draft.size ? ` (${S.draft.size} لم يُحفظ)` : "");
+  if (!ready) { $("#saveBar").hidden = true; $("#noAssignHint").hidden = true; return; }
 
   // حفظ التركيز على مربع الاختيار بعد إعادة الرسم
   const fk = document.activeElement && document.activeElement.dataset ? document.activeElement.dataset.key : null;
 
   computeReq();
+  if (!S.saving) pruneDraft();   // أثناء الحفظ تبقى المسودة كما هي حتى يتأكد الخادم
+  $("#noAssignHint").hidden = S.assignments.length > 0 || S.tab === "admin";
   const rows = [...S.students.values()].sort(byName).map(s => ({ s, st: studentStats(s.id) }));
-  renderStats(overallStats(rows));
-  renderStudents(rows);
-  renderDomains();
-  renderAssignments();
-  $("#assignTitle").placeholder = `مثال: ${nextAssignTitle()}`;
+  renderRecord(rows);
+  renderFollow(rows);
+  renderAdmin(rows);
 
   if (fk) { const el = document.querySelector(`input[data-key="${fk}"]`); if (el) el.focus(); }
 }
 
-function renderStats(o) {
-  $("#stats").innerHTML = `
-    <div class="stat"><b>${o.n}</b><span>عدد الطلاب</span></div>
-    <div class="stat"><b>${o.m}</b><span>عدد التكاليف</span></div>
-    <div class="stat"><b>${o.m ? o.completed : "—"}</b><span>أكملوا جميع التكاليف</span></div>
-    <div class="stat"><b>${pctText(o.rate)}</b><span>نسبة التسليم العامة</span></div>`;
+// ---------- التسجيل ----------
+function recItem(sid, aid, label) {
+  const k = dkey(sid, aid), changed = S.draft.has(k), want = changed ? S.draft.get(k) : isDone(sid, aid);
+  const tag = changed ? (want ? `<em class="t-add">سيُسجَّل</em>` : `<em class="t-del">سيُلغى</em>`) : (want ? `<em>مسلَّم</em>` : "");
+  return `<li><label class="chk${changed ? " chg" : ""}"><input type="checkbox" data-key="${esc(k)}" data-sid="${esc(sid)}" data-aid="${esc(aid)}"${want ? " checked" : ""}${S.saving ? " disabled" : ""}><span>${esc(label)}</span>${tag}</label></li>`;
 }
 
-function renderStudents(rows) {
-  const total = S.assignments.length;
-  $("#noAssignHint").hidden = total > 0 || rows.length === 0;
+function renderRecord(rows) {
+  const r = S.rec, n = rows.length;
+  document.querySelectorAll("#recModeSeg [data-mode]").forEach(b => b.classList.toggle("on", b.dataset.mode === r.mode));
+  $("#recAssign").hidden = r.mode !== "assign";
+  $("#recStudent").hidden = r.mode !== "student";
 
-  // أزرار التصفية بالألوان مع العدد
+  // --- حسب التكليف: تختار التكليف وتحدد من سلّمه ---
+  if (r.aid && !S.assignments.some(a => a.id === r.aid)) r.aid = "";
+  if (!r.aid && S.assignments.length) r.aid = S.assignments[S.assignments.length - 1].id;   // الأحدث افتراضيًا
+  const sel = $("#recAssignSel");
+  setHtml(sel, assignOptions(a => `${a.title} (${submittedCount(a.id)} من ${n})`));
+  sel.value = r.aid;
+  sel.disabled = !S.assignments.length || S.saving;
+  $("#recOnlyMissing").checked = r.onlyMissing;
+  const box = $("#recList"), info = $("#recAssignInfo");
+  if (!S.assignments.length) { box.innerHTML = `<li class="empty">لا توجد تكاليف بعد — أضفها من القائمة ⋮ ← «الإدارة».</li>`; info.textContent = ""; }
+  else if (!n) { box.innerHTML = `<li class="empty">لا يوجد طلاب بعد — أضفهم من القائمة ⋮ ← «الإدارة».</li>`; info.textContent = ""; }
+  else {
+    const a = S.assignments.find(x => x.id === r.aid);
+    const dn = domainName(a.domainId);
+    info.textContent = `${dn ? `المجال: ${dn} · ` : ""}سلّمه ${submittedCount(a.id)} من ${n}`;
+    const q = norm(r.q);
+    let list = rows;
+    if (r.onlyMissing) list = list.filter(x => !isDone(x.s.id, a.id));
+    if (q) list = list.filter(x => norm(x.s.name).includes(q));
+    box.innerHTML = list.length ? list.map(x => recItem(x.s.id, a.id, x.s.name)).join("")
+      : `<li class="empty">${q ? `لا يوجد طالب باسم «${esc(r.q.trim())}».` : "جميع الطلاب سلّموا هذا التكليف."}</li>`;
+  }
+  $("#recAll").disabled = $("#recNone").disabled = $("#recOnlyMissing").disabled = S.saving || !S.assignments.length || !n;
+
+  // --- حسب الطالب: تختار الطالب وتحدد ما سلّمه ---
+  if (r.sid && !S.students.has(r.sid)) r.sid = "";
+  $("#recStuPick").hidden = !!r.sid;
+  $("#recStuView").hidden = !r.sid;
+  if (!r.sid) {
+    const q = norm(r.stuQ);
+    const list = q ? rows.filter(x => norm(x.s.name).includes(q)) : rows;
+    $("#recStuList").innerHTML = !n ? `<div class="empty">لا يوجد طلاب بعد — أضفهم من القائمة ⋮ ← «الإدارة».</div>`
+      : list.length ? list.map(x => `<button type="button" class="pick" data-pick="${esc(x.s.id)}"><span>${esc(x.s.name)}</span><span class="badge s-${x.st.status}">${statusLabel(x.st)}</span></button>`).join("")
+      : `<div class="empty">لا يوجد طالب باسم «${esc(r.stuQ.trim())}».</div>`;
+  } else {
+    const x = rows.find(y => y.s.id === r.sid);
+    $("#recStuName").innerHTML = `${esc(x.s.name)} <span class="badge s-${x.st.status}">${statusLabel(x.st)}</span>`;
+    $("#recStuInfo").textContent = `المسلّمة ${x.st.done} من ${x.st.total}` + (x.st.domainsTotal ? ` · المجالات ${x.st.domainsDone} من ${x.st.domainsTotal}` : "");
+    $("#recStuChange").disabled = S.saving;
+    $("#recStuChecks").innerHTML = S.assignments.length
+      ? groupedHtml(a => recItem(r.sid, a.id, a.title), domainHead(r.sid))
+      : `<p class="muted">لا توجد تكاليف بعد — أضفها من القائمة ⋮ ← «الإدارة».</p>`;
+  }
+
+  // --- شريط الحفظ ---
+  const m = S.draft.size;
+  $("#saveBar").hidden = !m || S.tab !== "record";
+  if (m) {
+    let add = 0, del = 0;
+    for (const v of S.draft.values()) v ? add++ : del++;
+    $("#saveInfo").textContent = [add ? `تسجيل ${add}` : "", del ? `إلغاء ${del}` : ""].filter(Boolean).join(" · ") + " — لم يُحفظ بعد";
+  }
+  $("#draftSave").disabled = $("#draftUndo").disabled = S.saving;
+  $("#draftSave").textContent = S.saving ? "جارٍ الحفظ…" : "حفظ";
+}
+
+// ---------- المتابعة ----------
+function renderFollow(rows) {
+  const total = S.assignments.length;
+
+  // شريط الألوان = الإحصائيات والتصفية معًا
   const counts = { all: rows.length };
   for (const k of STATUS_ORDER) counts[k] = 0;
   for (const r of rows) if (counts[r.st.status] !== undefined) counts[r.st.status]++;
@@ -629,25 +898,25 @@ function renderStudents(rows) {
   $("#filters").innerHTML = [`<button class="btn${S.filter === "all" ? " on" : ""}" type="button" data-filter="all">الكل (${counts.all})</button>`]
     .concat(STATUS_ORDER.map(k => `<button class="btn${S.filter === k ? " on" : ""}" type="button" data-filter="${k}">
       <i class="dot s-${k}"></i>${STATUS_FILTER[k]} (${counts[k]})</button>`)).join("");
+  const o = overallStats(rows);
+  $("#overall").innerHTML = total ? `${total} تكليف · نسبة التسليم العامة <b dir="ltr">${pctText(o.rate)}</b>` : "";
 
-  // تصفية: لم يسلّم في مجال معيّن (تظهر فقط إن وُجدت مجالات فيها تكاليف)
+  // لم يسلّم في مجال معيّن (تظهر فقط إن وُجدت مجالات فيها تكاليف)
   const dsel = $("#domainFilter");
   if (S.domainFilter && !RQ.domainGroups.some(g => g.domain.id === S.domainFilter)) S.domainFilter = "";
   dsel.hidden = !RQ.domainGroups.length;
-  dsel.innerHTML = `<option value="">كل المجالات</option>` +
-    RQ.domainGroups.map(g => `<option value="${esc(g.domain.id)}">لم يسلّم في مجال: ${esc(g.domain.name)}</option>`).join("");
+  setHtml(dsel, `<option value="">كل المجالات</option>` +
+    RQ.domainGroups.map(g => `<option value="${esc(g.domain.id)}">لم يسلّم في مجال: ${esc(g.domain.name)}</option>`).join(""));
   dsel.value = S.domainFilter;
-  // يظهر على زر «التصفية» حتى وهو مغلق، فلا يُظن أن طلابًا اختفوا
-  $("#filterState").textContent = [S.filter !== "all" ? STATUS_FILTER[S.filter] : "",
-    S.domainFilter ? `لم يسلّم في: ${domainName(S.domainFilter)}` : ""].filter(Boolean).join(" · ");
 
   const q = norm(S.q);
   let list = S.filter === "all" ? rows : rows.filter(r => r.st.status === S.filter);
   if (S.domainFilter) list = list.filter(r => !coveredDomain(r.s.id, S.domainFilter));
   if (q) list = list.filter(r => norm(r.s.name).includes(q));
+  list = sortRows(list);
 
   const box = $("#studentList");
-  if (!rows.length) { box.innerHTML = `<div class="empty">لا يوجد طلاب بعد. أضف أول طالب من الأعلى.</div>`; return; }
+  if (!rows.length) { box.innerHTML = `<div class="empty">لا يوجد طلاب بعد — أضفهم من القائمة ⋮ ← «الإدارة».</div>`; return; }
   if (!list.length) {
     const filtered = S.filter !== "all" || S.domainFilter;
     const t = q ? `لا يوجد طالب باسم «${esc(S.q.trim())}»${filtered ? " ضمن هذا التصنيف" : ""}.`
@@ -655,62 +924,66 @@ function renderStudents(rows) {
     box.innerHTML = `<div class="empty">${t}</div>`;
     return;
   }
-  box.innerHTML = list.map(r => studentCard(r.s, r.st)).join("");
+  box.innerHTML = list.map(r => followCard(r.s, r.st)).join("");
 }
 
-function checkItem(s, a, set, deleting) {
-  const key = s.id + "|" + a.id;
-  const pend = S.pending.has(key);
-  const checked = pend ? S.pending.get(key) : set.has(a.id);
-  return `<li><label class="chk"><input type="checkbox" data-key="${esc(key)}" data-sid="${esc(s.id)}" data-aid="${esc(a.id)}"
-    ${checked ? "checked" : ""} ${pend || deleting ? "disabled" : ""}><span>${esc(a.title)}</span>${pend ? "<em>جارٍ الحفظ…</em>" : ""}</label></li>`;
-}
-
-function studentCard(s, st) {
+function followCard(s, st) {
   const open = S.open.has(s.id);
-  const badge = `<span class="badge s-${st.status}">${statusLabel(st)}</span>`;
   let body = "";
   if (open) {
     const set = S.done.get(s.id) || EMPTY;
-    const deleting = S.busyIds.has(s.id);
-    let lists = "";
-    if (!RQ.domainGroups.length) {
-      lists = `<ul class="checks">${S.assignments.map(a => checkItem(s, a, set, deleting)).join("")}</ul>`;
-    } else {
-      // التكاليف مرتبة تحت مجالاتها
-      for (const g of RQ.domainGroups) {
-        const yes = g.items.some(a => set.has(a.id));
-        lists += `<div class="dom-h"><span>${esc(g.domain.name)}</span>
-          <small class="${yes ? "yes" : "no"}">${yes ? "سلّم منه" : "لم يسلّم منه شيئًا"}</small></div>
-          <ul class="checks">${g.items.map(a => checkItem(s, a, set, deleting)).join("")}</ul>`;
-      }
-      if (RQ.loose.length) lists += `<div class="dom-h"><span>بدون مجال</span></div>
-        <ul class="checks">${RQ.loose.map(a => checkItem(s, a, set, deleting)).join("")}</ul>`;
-    }
+    const item = a => `<li class="ro${set.has(a.id) ? " yes" : ""}"><i></i><span>${esc(a.title)}</span></li>`;
     body = `<div class="stu-body">
-      ${S.assignments.length ? lists : `<p class="muted">لا توجد تكاليف بعد.</p>`}
-      <div class="stu-actions"><button class="btn text-danger" type="button" data-act="delStudent" data-id="${esc(s.id)}" ${deleting ? "disabled" : ""}>
-        ${deleting ? "جارٍ الحذف…" : "حذف الطالب"}</button></div></div>`;
+      <p class="info">المسلّمة <b>${st.done}</b> · المتبقية <b>${st.remaining}</b> · الإنجاز <b dir="ltr">${pctText(st.pct)}</b></p>
+      ${S.assignments.length ? groupedHtml(item, domainHead(s.id)) : `<p class="muted">لا توجد تكاليف بعد.</p>`}
+      <div class="stu-actions"><button class="btn secondary" type="button" data-act="recordStu" data-id="${esc(s.id)}">تسجيل تسليماته</button></div></div>`;
   }
   return `<article class="stu s-${st.status}">
     <button class="stu-toggle" type="button" data-act="toggle" data-id="${esc(s.id)}" aria-expanded="${open}">
-      <div class="stu-top"><span class="stu-name">${esc(s.name)}</span>${badge}</div>
+      <div class="stu-top"><span class="stu-name">${esc(s.name)}</span><span class="badge s-${st.status}">${statusLabel(st)}</span></div>
       <div class="bar"><i style="width:${st.pct || 0}%"></i></div>
       <div class="nums">
-        <span>المسلّمة: <b>${st.done}</b> من <b>${st.total}</b></span>
-        <span>المتبقية: <b>${st.remaining}</b></span>
-        <span>الإنجاز: <b dir="ltr">${pctText(st.pct)}</b></span>
-        ${st.domainsTotal ? `<span>المجالات: <b>${st.domainsDone}</b> من <b>${st.domainsTotal}</b></span>` : ""}
+        <span>المسلّمة <b>${st.done}</b> من <b>${st.total}</b></span>
+        ${st.domainsTotal ? `<span>المجالات <b>${st.domainsDone}</b> من <b>${st.domainsTotal}</b></span>` : ""}
+        <span class="chev">${open ? "إخفاء ▴" : "التفاصيل ▾"}</span>
       </div>
-      <div class="chev">${open ? "إخفاء التكاليف ▴" : "عرض التكاليف ▾"}</div>
     </button>${body}</article>`;
+}
+
+// ---------- الإدارة ----------
+function renderAdmin(rows) {
+  $("#stuCount").textContent = rows.length ? `(${rows.length})` : "";
+  $("#assignCount").textContent = S.assignments.length ? `(${S.assignments.length})` : "";
+
+  const q = norm(S.adminQ);
+  const list = q ? rows.filter(x => norm(x.s.name).includes(q)) : rows;
+  $("#adminStuList").innerHTML = !rows.length ? `<p class="muted small" style="margin:10px 0 0">لا يوجد طلاب بعد.</p>`
+    : !list.length ? `<p class="muted small" style="margin:10px 0 0">لا يوجد طالب بهذا الاسم.</p>`
+    : list.map(x => {
+      const b = S.busyIds.has(x.s.id);
+      return `<div class="arow">
+        <div><div class="t">${esc(x.s.name)}</div><small>المسلّمة ${x.st.done} من ${x.st.total}</small></div>
+        <div class="btns"><button class="btn text-danger" type="button" data-act="delStudent" data-id="${esc(x.s.id)}"${b ? " disabled" : ""}>${b ? "جارٍ الحذف…" : "حذف"}</button></div></div>`;
+    }).join("");
+
+  renderDomains();
+  renderAssignments();
+  $("#assignTitle").placeholder = `مثال: ${nextAssignTitle()}`;
+
+  // الأدوات
+  $("#sortSel").value = S.sort;
+  const cs = $("#copySel");
+  setHtml(cs, assignOptions(a => a.title));
+  if (!S.assignments.some(a => a.id === S.copyAid)) S.copyAid = S.assignments.length ? S.assignments[S.assignments.length - 1].id : "";
+  cs.value = S.copyAid;
+  cs.disabled = $("#copyBtn").disabled = !S.assignments.length;
 }
 
 function renderAssignments() {
   // قائمة اختيار المجال في نموذج الإضافة (تحتفظ بآخر اختيار)
   const sel = $("#assignDomain");
   if (S.lastDomain && !S.domains.some(d => d.id === S.lastDomain)) S.lastDomain = "";
-  sel.innerHTML = S.domains.map(d => `<option value="${esc(d.id)}">${esc(d.name)}</option>`).join("") + `<option value="">بدون مجال</option>`;
+  setHtml(sel, S.domains.map(d => `<option value="${esc(d.id)}">${esc(d.name)}</option>`).join("") + `<option value="">بدون مجال</option>`);
   sel.value = S.lastDomain || (S.domains[0] ? S.domains[0].id : "");
 
   const box = $("#assignmentList");
@@ -801,25 +1074,53 @@ function stopListeners() {
 }
 
 // ---------- العمليات ----------
-async function setDone(sid, aid, value) {
-  const key = sid + "|" + aid;
-  if (S.pending.has(key)) return;
-  if (!S.students.has(sid) || !S.assignments.some(a => a.id === aid)) { scheduleRender(); return; }
-  if (!canWrite()) { scheduleRender(); return; }
-  S.pending.set(key, value); scheduleRender();
-  try {
-    // وثيقة واحدة لكل طالب، والمفتاح داخلها = معرّف التكليف ← لا تكرار، والتحديث في نفس السجل
-    await track(fb.setDoc(ref("submissions", sid), {
-      studentId: sid,
-      done: { [aid]: value ? true : fb.deleteField() },
-      updatedAt: fb.serverTimestamp(),
-    }, { merge: true }));
-    toast("تم الحفظ", "", 1200);
-  } catch (e) {
-    toast(errMsg(e, "تعذّر حفظ حالة التسليم."), "err", 4000);
-  } finally {
-    S.pending.delete(key); scheduleRender();
+// حفظ المسودة دفعة واحدة: وثيقة واحدة لكل طالب، والمفتاح داخلها = معرّف التكليف ← لا تكرار، والتحديث في نفس السجل
+async function saveDraft() {
+  if (S.saving) return;
+  pruneDraft();
+  if (!S.draft.size) { render(); return; }
+  const per = new Map();
+  let add = 0, del = 0;
+  for (const [k, v] of S.draft) {
+    const [sid, aid] = k.split("|");
+    if (!per.has(sid)) per.set(sid, []);
+    per.get(sid).push([aid, v]);
+    v ? add++ : del++;
   }
+  const lines = [];
+  if (add) lines.push(`سيُسجَّل التسليم: ${add}`);
+  if (del) lines.push(`سيُلغى التسليم: ${del}`);
+  lines.push(`عدد الطلاب: ${per.size}`);
+  const ok = await ask({ title: "حفظ التسليم", text: lines.join("\n"), ok: "حفظ" });
+  if (!ok || !canWrite()) return;
+  S.saving = true; render();
+  const entries = [...per.entries()];
+  let saved = 0;
+  try {
+    for (let i = 0; i < entries.length; i += 450) {
+      const chunk = entries.slice(i, i + 450);
+      const b = fb.writeBatch(db);
+      for (const [sid, items] of chunk) {
+        const done = {};
+        for (const [aid, v] of items) done[aid] = v ? true : fb.deleteField();
+        b.set(ref("submissions", sid), { studentId: sid, done, updatedAt: fb.serverTimestamp() }, { merge: true });
+      }
+      await track(b.commit());
+      // لا يُزال من المسودة إلا ما أكّد الخادم حفظه
+      for (const [sid, items] of chunk) for (const [aid] of items) { S.draft.delete(dkey(sid, aid)); saved++; }
+    }
+    toast(`تم الحفظ (${saved})`, "", 2000);
+  } catch (e) {
+    toast(errMsg(e, "تعذّر الحفظ. التغييرات غير المحفوظة ما زالت ظاهرة، أعد المحاولة."), "err", 5000);
+  } finally {
+    S.saving = false; render();
+  }
+}
+
+async function undoDraft() {
+  if (!S.draft.size || S.saving) return;
+  const ok = await ask({ title: "تراجع", text: `سيتم تجاهل التغييرات غير المحفوظة (${S.draft.size}).`, ok: "تراجع", danger: true });
+  if (ok) { S.draft.clear(); render(); }
 }
 
 async function addStudents(names) {
@@ -1027,13 +1328,16 @@ async function onDeleteAssignment(btn, aid) {
   } finally { S.busyIds.delete(aid); scheduleRender(); }
 }
 
-// ---------- الدخول والخروج ----------
+// ---------- الدخول وتبديل القسم ----------
 function showOnly(view) {
   $("#bootMsg").hidden = true;
   $("#setupView").hidden = view !== "setup";
   $("#groupView").hidden = view !== "groups" && view !== "setup";
   $("#appView").hidden = view !== "app";
-  $("#switchBtn").hidden = view !== "app";
+  $("#topActions").hidden = view !== "app";
+  document.body.classList.toggle("in-app", view === "app");
+  closeMenu();
+  document.querySelectorAll("#gSwitch [data-g]").forEach(b => b.classList.toggle("on", b.dataset.g === S.group));
   $("#subTitle").textContent = view === "app" ? `قسم ${GROUPS[S.group]}` : "إدارة الطلاب والتكاليف ومتابعة التسليم من مكان واحد";
 }
 
@@ -1047,42 +1351,122 @@ function enterGroup(g) {
   startListeners();
   render();
 }
-function leaveGroup() {
+
+function resetGroupState() {
   stopListeners();
-  S.group = null;
   S.students = new Map(); S.assignments = []; S.done = new Map();
-  S.open.clear(); S.pending.clear(); S.busyIds.clear(); S.q = ""; $("#search").value = "";
-  S.tab = "students"; S.filter = "all"; S.domainFilter = "";
-  $("#studentList").innerHTML = $("#assignmentList").innerHTML = $("#stats").innerHTML = "";
-  try { localStorage.removeItem(GROUP_KEY); } catch (_) {}
-  document.title = "متابعة تكاليف الطلاب";
-  showOnly("groups");
+  S.open.clear(); S.draft.clear(); S.busyIds.clear();
+  S.q = ""; S.adminQ = ""; S.filter = "all"; S.domainFilter = "";
+  S.rec = { ...S.rec, aid: "", sid: "", q: "", stuQ: "" };
+  for (const id of ["search", "recSearch", "recStuSearch", "adminStuSearch"]) $("#" + id).value = "";
+  $("#copyOut").hidden = true; $("#copyOut").value = "";
 }
 
-async function onSwitchGroup() {
-  if (S.pending.size || S.busyIds.size) {
-    const ok = await ask({ title: "عمليات حفظ جارية", text: "توجد تغييرات لم يتأكد حفظها بعد. هل تريد تغيير القسم على أي حال؟", ok: "تغيير القسم", danger: true });
+async function switchGroup(g) {
+  if (!GROUPS[g] || g === S.group) return;
+  if (S.saving || S.busyIds.size) { toast("انتظر حتى تكتمل عملية الحفظ الحالية.", "warn", 3000); return; }
+  if (S.draft.size) {
+    const ok = await ask({ title: "تغييرات غير محفوظة", danger: true, ok: "انتقال دون حفظ",
+      text: `لديك ${S.draft.size} تغيير لم يُحفظ في «التسجيل». الانتقال إلى ${GROUPS[g]} سيتجاهلها.` });
     if (!ok) return;
   }
-  leaveGroup();
+  resetGroupState();
+  enterGroup(g);
+}
+
+// ---------- أداة نسخ أسماء من لم يسلّم ----------
+async function onCopy() {
+  const a = S.assignments.find(x => x.id === $("#copySel").value);
+  if (!a) return;
+  const names = [...S.students.values()].sort(byName).filter(s => !isDone(s.id, a.id)).map(s => s.name);
+  const out = $("#copyOut");
+  if (!names.length) { out.hidden = true; toast("جميع الطلاب سلّموا هذا التكليف."); return; }
+  const text = `لم يسلّموا «${a.title}» - ${GROUPS[S.group]} (${names.length}):\n` + names.map((n, i) => `${i + 1}. ${n}`).join("\n");
+  out.value = text; out.hidden = false;
+  try { await navigator.clipboard.writeText(text); toast(`تم النسخ (${names.length})`); }
+  catch (_) { out.focus(); out.select(); toast("حدّد النص وانسخه يدويًا.", "warn", 3500); }
+  if (S.draft.size) toast("القائمة مبنية على المحفوظ فقط، ولديك تغييرات لم تُحفظ في «التسجيل».", "warn", 4500);
 }
 
 // ---------- ربط الأحداث ----------
 $("#rulesText").textContent = RULES;
 document.querySelectorAll("[data-group]").forEach(b => b.addEventListener("click", () => enterGroup(b.dataset.group)));
-$("#switchBtn").addEventListener("click", onSwitchGroup);
+$("#gSwitch").addEventListener("click", e => { const b = e.target.closest("[data-g]"); if (b) switchGroup(b.dataset.g); });
 $("#retryBtn").addEventListener("click", () => { $("#loadErr").hidden = true; startListeners(); render(); });
-$("#addStudentForm").addEventListener("submit", onAddStudent);
-$("#bulkBtn").addEventListener("click", onBulkAdd);
-$("#addAssignForm").addEventListener("submit", onAddAssignment);
+// القائمة ⋮ (المتابعة والإدارة) وزر الرجوع
+function closeMenu() { $("#menu").hidden = true; $("#menuBtn").setAttribute("aria-expanded", "false"); }
+function goTo(tab) { closeMenu(); S.tab = tab; render(); window.scrollTo({ top: 0 }); }
+$("#menuBtn").addEventListener("click", e => {
+  e.stopPropagation();
+  const open = $("#menu").hidden;
+  $("#menu").hidden = !open; $("#menuBtn").setAttribute("aria-expanded", String(open));
+});
+$("#menu").addEventListener("click", e => { const b = e.target.closest("[data-go]"); if (b) goTo(b.dataset.go); });
+document.addEventListener("click", e => { if (!$("#menu").hidden && !e.target.closest("#menu")) closeMenu(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("#menu").hidden) { closeMenu(); $("#menuBtn").focus(); } });
+$("#backBtn").addEventListener("click", () => goTo("record"));
+
+// التسجيل
+$("#recModeSeg").addEventListener("click", e => { const b = e.target.closest("[data-mode]"); if (b) { S.rec.mode = b.dataset.mode; render(); } });
+$("#recAssignSel").addEventListener("change", e => { S.rec.aid = e.target.value; render(); });
+$("#recSearch").addEventListener("input", e => { S.rec.q = e.target.value; scheduleRender(); });
+$("#recOnlyMissing").addEventListener("change", e => { S.rec.onlyMissing = e.target.checked; render(); });
+const visibleRecBoxes = () => [...document.querySelectorAll('#recList input[type="checkbox"][data-sid]')];
+$("#recAll").addEventListener("click", () => { if (S.saving) return; visibleRecBoxes().forEach(c => setDraft(c.dataset.sid, c.dataset.aid, true)); render(); });
+$("#recNone").addEventListener("click", () => { if (S.saving) return; visibleRecBoxes().forEach(c => S.draft.delete(dkey(c.dataset.sid, c.dataset.aid))); render(); });
+const onRecCheck = e => {
+  const c = e.target;
+  if (!c.matches('input[type="checkbox"][data-sid]')) return;
+  if (!S.saving) setDraft(c.dataset.sid, c.dataset.aid, c.checked);
+  render();
+};
+$("#recList").addEventListener("change", onRecCheck);
+$("#recStuChecks").addEventListener("change", onRecCheck);
+$("#recStuSearch").addEventListener("input", e => { S.rec.stuQ = e.target.value; scheduleRender(); });
+$("#recStuList").addEventListener("click", e => {
+  const b = e.target.closest("[data-pick]");
+  if (!b) return;
+  S.rec.sid = b.dataset.pick; render();
+  $("#recStudent").scrollIntoView({ block: "start" });
+});
+$("#recStuChange").addEventListener("click", () => { S.rec.sid = ""; render(); $("#recStuSearch").focus(); });
+$("#draftSave").addEventListener("click", saveDraft);
+$("#draftUndo").addEventListener("click", undoDraft);
+
+// المتابعة
 $("#search").addEventListener("input", e => { S.q = e.target.value; scheduleRender(); });
-document.querySelectorAll(".tab").forEach(b => b.addEventListener("click", () => { S.tab = b.dataset.tab; render(); }));
 $("#filters").addEventListener("click", e => {
   const b = e.target.closest("[data-filter]");
   if (b) { S.filter = b.dataset.filter; render(); }
 });
 $("#domainFilter").addEventListener("change", e => { S.domainFilter = e.target.value; render(); });
+$("#studentList").addEventListener("click", e => {
+  const t = e.target.closest("[data-act]");
+  if (!t) return;
+  const id = t.dataset.id;
+  if (t.dataset.act === "toggle") { S.open.has(id) ? S.open.delete(id) : S.open.add(id); render(); }
+  else if (t.dataset.act === "recordStu") {
+    S.tab = "record"; S.rec.mode = "student"; S.rec.sid = id; render();
+    window.scrollTo({ top: 0 });
+  }
+});
+
+// الإدارة
+$("#addStudentForm").addEventListener("submit", onAddStudent);
+$("#bulkBtn").addEventListener("click", onBulkAdd);
+$("#adminStuSearch").addEventListener("input", e => { S.adminQ = e.target.value; scheduleRender(); });
+$("#adminStuList").addEventListener("click", e => {
+  const t = e.target.closest('[data-act="delStudent"]');
+  if (t) onDeleteStudent(t, t.dataset.id);
+});
+$("#addAssignForm").addEventListener("submit", onAddAssignment);
 $("#assignDomain").addEventListener("change", e => { S.lastDomain = e.target.value; });
+$("#assignmentList").addEventListener("click", e => {
+  const t = e.target.closest("[data-act]");
+  if (!t) return;
+  if (t.dataset.act === "rename") onRenameAssignment(t, t.dataset.id);
+  else if (t.dataset.act === "delAssign") onDeleteAssignment(t, t.dataset.id);
+});
 $("#addDomainForm").addEventListener("submit", onAddDomain);
 $("#domainList").addEventListener("click", e => {
   const t = e.target.closest("[data-act]");
@@ -1090,29 +1474,19 @@ $("#domainList").addEventListener("click", e => {
   if (t.dataset.act === "renameDomain") onRenameDomain(t, t.dataset.id);
   else if (t.dataset.act === "delDomain") onDeleteDomain(t, t.dataset.id);
 });
-
-$("#studentList").addEventListener("click", e => {
-  const t = e.target.closest("[data-act]");
-  if (!t) return;
-  const id = t.dataset.id;
-  if (t.dataset.act === "toggle") { S.open.has(id) ? S.open.delete(id) : S.open.add(id); render(); }
-  else if (t.dataset.act === "delStudent") onDeleteStudent(t, id);
+$("#sortSel").addEventListener("change", e => {
+  S.sort = e.target.value;
+  try { localStorage.setItem(SORT_KEY, S.sort); } catch (_) {}
+  render();
+  toast(S.sort === "late" ? "قائمة المتابعة: الأكثر تأخرًا أولًا" : "قائمة المتابعة: بالاسم");
 });
-$("#studentList").addEventListener("change", e => {
-  const c = e.target;
-  if (c.matches('input[type="checkbox"][data-sid]')) setDone(c.dataset.sid, c.dataset.aid, c.checked);
-});
-$("#assignmentList").addEventListener("click", e => {
-  const t = e.target.closest("[data-act]");
-  if (!t) return;
-  if (t.dataset.act === "rename") onRenameAssignment(t, t.dataset.id);
-  else if (t.dataset.act === "delAssign") onDeleteAssignment(t, t.dataset.id);
-});
+$("#copySel").addEventListener("change", e => { S.copyAid = e.target.value; $("#copyOut").hidden = true; });
+$("#copyBtn").addEventListener("click", onCopy);
 
 const updateNet = () => { $("#netBar").hidden = navigator.onLine; };
 window.addEventListener("online", updateNet);
 window.addEventListener("offline", updateNet);
-window.addEventListener("beforeunload", e => { if (S.pending.size || S.busyIds.size) { e.preventDefault(); e.returnValue = ""; } });
+window.addEventListener("beforeunload", e => { if (S.draft.size || S.saving || S.busyIds.size) { e.preventDefault(); e.returnValue = ""; } });
 updateNet();
 
 // ---------- التشغيل ----------
